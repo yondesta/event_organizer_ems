@@ -1,0 +1,10 @@
+target/*
+.project
+.classpath
+*.class
+target-eclipse/*
+.asscache
+grailsw*
+wrapper/*
+.settings/*
+
