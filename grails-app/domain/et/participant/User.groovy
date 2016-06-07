@@ -17,10 +17,19 @@ class User implements Serializable {
 	String phone
 	String username
 	String password
+	String address
+	Date birthDate
+	String gender
+	Integer age
+
 	boolean enabled = true
 	boolean accountExpired
 	boolean accountLocked
 	boolean passwordExpired
+
+	Integer getAge() {
+		birthDate ? new Date().getYear() - birthDate.getYear() : null
+	}
 
 	String toString() {
 		"${firstName?.capitalize()} ${lastName?.capitalize()}"
@@ -50,7 +59,7 @@ class User implements Serializable {
 		password = springSecurityService?.passwordEncoder ? springSecurityService.encodePassword(password) : password
 	}
 
-	static transients = ['springSecurityService']
+	static transients = ['springSecurityService', 'age']
 
 	static constraints = {
 		username blank: false, unique: true
@@ -59,6 +68,10 @@ class User implements Serializable {
 		lastName blank: false
 		email blank: false, email: true
 		phone nullable: true
+		address nullable: true
+		birthDate nullable: true
+		gender inList: ['M', 'F', 'U']
+		age nullable: true
 	}
 
 	static mapping = {
