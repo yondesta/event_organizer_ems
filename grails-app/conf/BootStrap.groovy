@@ -11,10 +11,10 @@ class BootStrap {
 		def resourceOwnerRole = new Role('ROLE_RESOURCE_OWNER').save(flush: true, failOnError: true)
 		def userRole = new Role('ROLE_USER').save(flush: true, failOnError: true)
   
-		def admin = new User('admin', 'admin').save(flush: true, failOnError: true)
-		def nico = new User('nico', 'nico').save(flush: true, failOnError: true)
-		def yonas = new User('yonas', 'yonas').save(flush: true, failOnError: true)
-  
+		def admin = new User(username: 'admin', password:'admin', firstName: 'Admin', lastName: 'Admin', email: 'admin@ems.et').save(flush: true, failOnError: true)
+		def nico = new User(username: 'nico', password:'nico', firstName: 'Nico', lastName: 'Salvato', email: 'nico@ems.et').save(flush: true, failOnError: true)
+		def yonas = new User(username: 'yonas', password:'yonas', firstName: 'Yonas', lastName: 'Desta', email: 'yonas@ems.et').save(flush: true, failOnError: true)
+
 		UserRole.create admin, adminRole, true
 		UserRole.create nico, userRole, true
 		UserRole.create yonas, userRole, true

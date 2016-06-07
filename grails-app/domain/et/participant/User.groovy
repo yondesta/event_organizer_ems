@@ -11,12 +11,20 @@ class User implements Serializable {
 
 	transient springSecurityService
 
+	String firstName
+	String lastName
+	String email
+	String phone
 	String username
 	String password
 	boolean enabled = true
 	boolean accountExpired
 	boolean accountLocked
 	boolean passwordExpired
+
+	String toString() {
+		"${firstName?.capitalize()} ${lastName?.capitalize()}"
+	}
 
 	User(String username, String password) {
 		this()
@@ -47,6 +55,10 @@ class User implements Serializable {
 	static constraints = {
 		username blank: false, unique: true
 		password blank: false
+		firstName blank: false
+		lastName blank: false
+		email blank: false, email: true
+		phone nullable: true
 	}
 
 	static mapping = {

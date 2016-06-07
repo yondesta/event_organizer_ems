@@ -1,32 +1,14 @@
 package et.participant
 
-import grails.transaction.Transactional;
+
+
 import static org.springframework.http.HttpStatus.*
-import grails.plugin.springsecurity.SpringSecurityUtils
+import grails.transaction.Transactional
 
 @Transactional(readOnly = true)
 class UserController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
-	
-	def home() {
-		if (SpringSecurityUtils.ifAllGranted('ROLE_ADMIN')) {
-			 println 'Admin home page...'
-			 render view: 'index'
-			 //redirect controller: '...', action: '...'
-			 return
-		 } else if (SpringSecurityUtils.ifAllGranted('ROLE_USER')) {
-			 println 'User home page...'
-			 render view: 'index'
-			 //redirect controller: '...', action: '...'
-			 return
-		 } else if (SpringSecurityUtils.ifAllGranted('ROLE_FACILITATOR')) {
-			 println 'Facilitator home page...'
-			 render view: 'index'
-			 //redirect controller: '...', action: '...'
-			 return
-		 }
-	}
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
