@@ -11,8 +11,13 @@ class EventController {
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     def index(Integer max) {
-        params.max = Math.min(max ?: 10, 100)
-        respond Event.list(params), model:[eventInstanceCount: Event.count()]
+        params.max = Math.min(max ?: 12, 100)
+        params.sort = 'startDate'
+        params.order = 'asc'
+        def events = Event.createCriteria().list(params) {
+            gt 'startDate', new Date()
+        }
+        [events: events, eventInstanceCount: Event.count()]
     }
 
     def show(Event eventInstance) {

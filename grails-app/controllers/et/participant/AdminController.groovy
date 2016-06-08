@@ -1,6 +1,7 @@
 package et.participant
 
 import et.event.Event
+import grails.transaction.Transactional
 
 class AdminController {
 
@@ -11,25 +12,33 @@ class AdminController {
                                                     availableEvents: Event.list()]
     }
 
+    @Transactional
     def saveRegistration(params) {
-        println 'saving registration...'
-        def eventId = params.remove('eventId') as long
-        def event = Event.get(eventId)
-        def sendEmail = Boolean.parseBoolean(params.remove('sendEmail'))
-        def confirmPassword = params.remove('confirmPassword')
-        if (confirmPassword != params.password) {
-            println 'Passwords are different!'
-        }
-        def partecipant = new User(params)
-        if (!partecipant.save(flush: true, failOnError: true)) {
-            render view: 'registerParticipant', model: [userInstance: partecipant, sendEmail: sendEmail, eventId: event]
+        def event = Event.get(params.eventId as long)
+        def sendEmail = Boolean.parseBoolean(params.sendEmail)
+        def participant = new User(params.user)
+        def model = [
+                userInstance: participant,
+                sendEmail: sendEmail,
+                eventInstance: event,
+                availableEvents: Event.list()
+        ]
+        if (params.confirmPassword != params.user.password) {
+            flash.message = 'Passwords not matching!'
+            render view: 'registerParticipant', model: model
+            log.warn 'Passwords not matching during participant registration'
             return
         }
-        UserRole.create partecipant, Role.findByAuthority('ROLE_USER'), true
-        event.addToPartecipants(partecipant)
+        if (!participant.save(flush: true, failOnError: true)) {
+            render view: 'registerParticipant', model: model
+            log.warn 'Error saving new participant'
+            return
+        }
+        UserRole.create participant, Role.findByAuthority('ROLE_USER'), true
+        event.addToPartecipants(participant)
         event.save(flush: true, failOnError: true)
         if (sendEmail)
-            println 'Sending email...'
+            log.info "Sending registration email to $participant.email"
         redirect controller: 'event', action: 'index'
     }
 }

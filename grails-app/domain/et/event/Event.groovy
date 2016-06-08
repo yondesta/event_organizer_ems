@@ -8,7 +8,7 @@ class Event {
 
     String title
     String description
-    String category
+    Category category
     Date startDate
     Date endDate
     User owner
@@ -16,6 +16,7 @@ class Event {
     String email
     Venue venue
     Catering catering
+    Integer maxParticipants = 0
 
     static hasMany = [partecipants: User]
 
@@ -26,5 +27,6 @@ class Event {
         email nullable: true
         partecipants nullable: true
         catering nullable: true
+        maxParticipants min: 0
     }
 }
