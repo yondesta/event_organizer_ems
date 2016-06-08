@@ -8,6 +8,7 @@ class AdminController {
     def index() {}
 
     def registerParticipant() {
+        flash.message = 'Test!'
         render view: 'registerParticipant', model: [userInstance: new User(params),
                                                     availableEvents: Event.list()]
     }
@@ -25,20 +26,24 @@ class AdminController {
         ]
         if (params.confirmPassword != params.user.password) {
             flash.message = 'Passwords not matching!'
-            render view: 'registerParticipant', model: model
+            flash.messageType = 'alert-danger'
             log.warn 'Passwords not matching during participant registration'
-            return
-        }
-        if (!participant.save(flush: true, failOnError: true)) {
             render view: 'registerParticipant', model: model
-            log.warn 'Error saving new participant'
             return
         }
+        if (!participant.validate()) {
+            flash.message = 'Passwords not matching!'
+            flash.messageType = 'alert-danger'log.warn 'Error saving new participant'
+            render view: 'registerParticipant', model: model
+            return
+        }
+        participant.save(flush: true, failOnError: true)
         UserRole.create participant, Role.findByAuthority('ROLE_USER'), true
         event.addToPartecipants(participant)
         event.save(flush: true, failOnError: true)
         if (sendEmail)
             log.info "Sending registration email to $participant.email"
+        flash.message = 'Registration successful!'
         redirect controller: 'event', action: 'index'
     }
 }

@@ -101,7 +101,6 @@
         <div class="form-group">
             <label>
                 Send Email
-                <span class="required-indicator">*</span>
             </label>
             <div class="checkbox">
                 <label>
