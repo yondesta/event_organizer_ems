@@ -11,6 +11,7 @@ class Catering {
     String email
 
     static constraints = {
+        description nullable: true
         email nullable: true, email: true
     }
 }
