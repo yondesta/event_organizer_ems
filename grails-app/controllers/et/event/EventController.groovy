@@ -1,6 +1,6 @@
 package et.event
 
-
+import et.participant.User
 
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
@@ -25,7 +25,8 @@ class EventController {
     }
 
     def create() {
-        respond new Event(params)
+        def owners = User.executeQuery("select u from UserRole ur inner join ur.user u join ur.role r where r.authority = 'ROLE_EVENT_OWNER'")
+        [eventInstance: new Event(params), owners: owners]
     }
 
     @Transactional
@@ -35,8 +36,10 @@ class EventController {
             return
         }
 
+        def owners = User.executeQuery("select u from UserRole ur inner join ur.user u join ur.role r where r.authority = 'ROLE_EVENT_OWNER'")
+
         if (eventInstance.hasErrors()) {
-            respond eventInstance.errors, view:'create'
+            respond eventInstance.errors, view:'create', model: [owners: owners]
             return
         }
 
@@ -52,7 +55,8 @@ class EventController {
     }
 
     def edit(Event eventInstance) {
-        respond eventInstance
+        def owners = User.executeQuery("select u from UserRole ur inner join ur.user u join ur.role r where r.authority = 'ROLE_EVENT_OWNER'")
+        [eventInstance: eventInstance, owners: owners]
     }
 
     @Transactional
