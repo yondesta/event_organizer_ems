@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta name="layout" content="main">
+		<meta name="layout" content="ems">
 		<g:set var="entityName" value="${message(code: 'event.label', default: 'Event')}" />
 		<title><g:message code="default.list.label" args="[entityName]" /></title>
 	</head>
@@ -32,9 +32,9 @@
 					
 						<g:sortableColumn property="email" title="${message(code: 'event.email.label', default: 'Email')}" />
 					
-						<g:sortableColumn property="category" title="${message(code: 'event.category.label', default: 'Category')}" />
+						<th><g:message code="event.catering.label" default="Catering" /></th>
 					
-						<g:sortableColumn property="endDate" title="${message(code: 'event.endDate.label', default: 'End Date')}" />
+						<g:sortableColumn property="category" title="${message(code: 'event.category.label', default: 'Category')}" />
 					
 					</tr>
 				</thead>
@@ -50,9 +50,9 @@
 					
 						<td>${fieldValue(bean: eventInstance, field: "email")}</td>
 					
-						<td>${fieldValue(bean: eventInstance, field: "category")}</td>
+						<td>${fieldValue(bean: eventInstance, field: "catering")}</td>
 					
-						<td><g:formatDate date="${eventInstance.endDate}" /></td>
+						<td>${fieldValue(bean: eventInstance, field: "category")}</td>
 					
 					</tr>
 				</g:each>

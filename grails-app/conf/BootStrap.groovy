@@ -2,6 +2,7 @@ import et.event.Event
 import et.participant.Role
 import et.participant.User
 import et.participant.UserRole
+import et.resources.Venue
 
 class BootStrap {
 
@@ -20,12 +21,13 @@ class BootStrap {
 		UserRole.create nico, userRole, true
 		UserRole.create yonas, userRole, true
 
-		def ev1 = new Event(title: 'Event 1', category: 'CAT1', owner: admin, startDate: new Date(2016 - 1700, 8, 12), endDate: new Date(2016 - 1700, 8, 14))
+		def venue1 = new Venue(name: 'Wolisso Hotel', location: 'Wolisso', seatsNumber: 150, pricePerDay: 1500, owner: yonas).save(flush: true, failOnError: true)
+		def ev1 = new Event(title: 'Event 1', category: 'CAT1', owner: admin, startDate: new Date(2016 - 1700, 8, 12), endDate: new Date(2016 - 1700, 8, 14), venue: venue1)
 		ev1.addToPartecipants(nico)
 		ev1.addToPartecipants(yonas)
 		ev1.save(flush: true, failOnError: true)
 
-		def ev2 = new Event(title: 'Event 2', category: 'CAT2', owner: admin, startDate: new Date(2016 - 1700, 7, 2), endDate: new Date(2016 - 1700, 7, 2))
+		def ev2 = new Event(title: 'Event 2', category: 'CAT2', owner: admin, startDate: new Date(2016 - 1700, 7, 2), endDate: new Date(2016 - 1700, 7, 2), venue: venue1)
 		ev2.addToPartecipants(yonas)
 		ev2.save(flush: true, failOnError: true)
     }

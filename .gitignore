@@ -7,4 +7,6 @@ target-eclipse/*
 grailsw*
 wrapper/*
 .settings/*
+.idea/*
+.slcache/*
 

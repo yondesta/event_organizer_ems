@@ -47,6 +47,15 @@
 
 </div>
 
+<div class="fieldcontain ${hasErrors(bean: eventInstance, field: 'catering', 'error')} ">
+	<label for="catering">
+		<g:message code="event.catering.label" default="Catering" />
+		
+	</label>
+	<g:select id="catering" name="catering.id" from="${et.resources.Catering.list()}" optionKey="id" value="${eventInstance?.catering?.id}" class="many-to-one" noSelection="['null': '']"/>
+
+</div>
+
 <div class="fieldcontain ${hasErrors(bean: eventInstance, field: 'category', 'error')} required">
 	<label for="category">
 		<g:message code="event.category.label" default="Category" />
@@ -80,6 +89,15 @@
 		<span class="required-indicator">*</span>
 	</label>
 	<g:datePicker name="startDate" precision="day"  value="${eventInstance?.startDate}"  />
+
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: eventInstance, field: 'venue', 'error')} required">
+	<label for="venue">
+		<g:message code="event.venue.label" default="Venue" />
+		<span class="required-indicator">*</span>
+	</label>
+	<g:select id="venue" name="venue.id" from="${et.resources.Venue.list()}" optionKey="id" required="" value="${eventInstance?.venue?.id}" class="many-to-one"/>
 
 </div>
 

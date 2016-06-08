@@ -1,6 +1,8 @@
 package et.event
 
 import et.participant.User
+import et.resources.Catering
+import et.resources.Venue
 
 class Event {
 
@@ -12,6 +14,8 @@ class Event {
     User owner
     String phone
     String email
+    Venue venue
+    Catering catering
 
     static hasMany = [partecipants: User]
 
@@ -21,5 +25,6 @@ class Event {
         phone nullable: true
         email nullable: true
         partecipants nullable: true
+        catering nullable: true
     }
 }

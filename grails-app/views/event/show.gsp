@@ -70,6 +70,15 @@
 				</li>
 				</g:if>
 			
+				<g:if test="${eventInstance?.catering}">
+				<li class="fieldcontain">
+					<span id="catering-label" class="property-label"><g:message code="event.catering.label" default="Catering" /></span>
+					
+						<span class="property-value" aria-labelledby="catering-label"><g:link controller="catering" action="show" id="${eventInstance?.catering?.id}">${eventInstance?.catering?.encodeAsHTML()}</g:link></span>
+					
+				</li>
+				</g:if>
+			
 				<g:if test="${eventInstance?.category}">
 				<li class="fieldcontain">
 					<span id="category-label" class="property-label"><g:message code="event.category.label" default="Category" /></span>
@@ -102,6 +111,15 @@
 					<span id="startDate-label" class="property-label"><g:message code="event.startDate.label" default="Start Date" /></span>
 					
 						<span class="property-value" aria-labelledby="startDate-label"><g:formatDate date="${eventInstance?.startDate}" /></span>
+					
+				</li>
+				</g:if>
+			
+				<g:if test="${eventInstance?.venue}">
+				<li class="fieldcontain">
+					<span id="venue-label" class="property-label"><g:message code="event.venue.label" default="Venue" /></span>
+					
+						<span class="property-value" aria-labelledby="venue-label"><g:link controller="venue" action="show" id="${eventInstance?.venue?.id}">${eventInstance?.venue?.encodeAsHTML()}</g:link></span>
 					
 				</li>
 				</g:if>
