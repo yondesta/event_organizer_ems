@@ -3,6 +3,7 @@ import et.event.Event
 import et.participant.Role
 import et.participant.User
 import et.participant.UserRole
+import et.resources.Catering
 import et.resources.Venue
 
 class BootStrap {
@@ -61,31 +62,44 @@ class BootStrap {
 					color: colors[it - 1]
 			).save(flush: true, failOnError: true)
 		}
-		(1..100).each {
-			def eventStartMonth = it % 12
-			def eventStartDay = it % 29
+		List<Venue> venues = []
+		(1..3).each {
 			def seatsNumber = (rnd.nextInt(30) + 10) * 10
-			def venue = new Venue(
-					name: locations,
-					location: 'Wolisso',
+			venues << new Venue(
+					name: "Venue $it",
+					location: locations[it - 1],
 					seatsNumber: seatsNumber,
 					pricePerDay: rnd.nextInt(30) * 100,
 					owner: eventOwners[it % 2]
-			)
-			venue.save(flush: true, failOnError: true)
+			).save(flush: true, failOnError: true)
+		}
+		(1..100).each {
+			def eventStartMonth = it % 12
+			def eventStartDay = it % 29
+			def venue = venues[it % 3]
 			def event = new Event(
 					title: "Event $it",
 					category: categories[it % 5],
-					maxParticipants: seatsNumber,
+					maxParticipants: venue.seatsNumber,
 					owner: eventOwners[it % 2],
 					startDate: new Date(2016 - 1900, eventStartMonth, eventStartDay),
 					endDate: new Date(2016 - 1900, eventStartMonth, eventStartDay + it % 3),
 					venue: venue
 			)
-			(0..rnd.nextInt(seatsNumber)).each { idx ->
+			(0..rnd.nextInt(venue.seatsNumber)).each { idx ->
 				event.addToPartecipants participants[rnd.nextInt(participants.size() - 1)]
 			}
 			event.save flush: true, failOnError: true
+		}
+		(1..3).each {
+			new Catering(
+					name: "Catering $it",
+					phone: "0912345678$it",
+					email: "cat$it@ems.et",
+					lunchPrice: 60,
+					teaBreakPrice: 30,
+					snackPrice: 15
+			).save(flush: true, failOnError: true)
 		}
     }
     def destroy = {
