@@ -13,7 +13,9 @@
 					<h1 class="page-header">Welcome to EMS! <small>...check our upcoming events!</small></h1>
 				</div>
 				<g:if test="${flash.message}">
-					<div class="message" role="status">${flash.message}</div>
+					<div class="alert ${flash.messageType ?: 'alert-info'} alert-dismissable" role="status">${flash.message}
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+					</div>
 				</g:if>
 			</div>
 			<div class="row">

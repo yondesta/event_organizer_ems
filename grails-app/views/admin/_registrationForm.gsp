@@ -73,9 +73,6 @@
                 <label class="radio-inline">
                     <input id="genderF" name="user.gender" value="F" type="radio"/>F
                 </label>
-                <label class="radio-inline">
-                    <input id="genderU" name="user.gender" value="U" type="radio"/>U
-                </label>
             </div>
         </div>
         <div class="form-group ${hasErrors(bean: userInstance, field: 'address', 'has-error')}">

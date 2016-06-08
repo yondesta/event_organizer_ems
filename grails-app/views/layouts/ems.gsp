@@ -23,7 +23,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="${createLink(controller: 'event', action: 'index')}">EMS</a>
+                <a class="navbar-brand" href="${createLink(uri: '/')}">EMS</a>
             </div>
             <!-- /.navbar-header -->
 
@@ -173,7 +173,7 @@
                             <!-- /input-group -->
                         </li>
                         <li>
-                            <a href="${createLink}"><i class="fa fa-home fa-fw"></i> Home</a>
+                            <a href="${createLink(uri: '/')}"><i class="fa fa-home fa-fw"></i> Home</a>
                         </li>
                         <li>
                             <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Charts<span class="fa arrow"></span></a>

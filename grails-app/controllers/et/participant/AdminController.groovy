@@ -8,7 +8,6 @@ class AdminController {
     def index() {}
 
     def registerParticipant() {
-        flash.message = 'Test!'
         render view: 'registerParticipant', model: [userInstance: new User(params),
                                                     availableEvents: Event.list()]
     }
@@ -33,7 +32,8 @@ class AdminController {
         }
         if (!participant.validate()) {
             flash.message = 'Passwords not matching!'
-            flash.messageType = 'alert-danger'log.warn 'Error saving new participant'
+            flash.messageType = 'alert-danger'
+            log.warn 'Error saving new participant'
             render view: 'registerParticipant', model: model
             return
         }
