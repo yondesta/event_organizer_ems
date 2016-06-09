@@ -16,6 +16,7 @@ class Venue {
     String phone
     User owner
     Catering catering
+    String picture
 
     static hasMany = [availabilities: Availability]
 
@@ -24,6 +25,9 @@ class Venue {
         email nullable: true, email: true
         phone nullable: true
         catering nullable: true
+        seatsNumber min: 0
+        pricePerDay min: new BigDecimal(0)
+        picture: nullable: true
     }
 
     String toString() {

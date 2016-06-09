@@ -1,121 +1,100 @@
 <%@ page import="et.resources.Venue" %>
 
 
-
-<div class="fieldcontain ${hasErrors(bean: venueInstance, field: 'description', 'error')} ">
-	<label for="description">
-		<g:message code="venue.description.label" default="Description" />
-		
-	</label>
-	<g:textField name="description" value="${venueInstance?.description}"/>
-
+<div class="row">
+	<div class="col-lg-4">
+        <div class="form-group ${hasErrors(bean: venueInstance, field: 'name', 'has-error')}">
+			<label class="control-label" for="name">Name
+				<span class="required-indicator">*</span>
+			</label>
+			<g:textField class="form-control" name="name" value="${venueInstance?.name}"/>
+		</div>
+	</div>
+	<div class="col-lg-4">
+	<div class="form-group ${hasErrors(bean: venueInstance, field: 'description', 'has-error')}">
+			<label class="control-label" for="description">Description</label>
+			<g:textField class="form-control" name="description" value="${venueInstance?.description}"/>
+		</div>
+	</div>
+	<div class="col-lg-4">
+		<div class="form-group ${hasErrors(bean: venueInstance, field: 'phone', 'has-error')}">
+			<label class="control-label" for="phone">Phone</label>
+			<g:textField class="form-control" name="phone" value="${venueInstance?.phone}"/>
+		</div>
+	</div>
 </div>
-
-<div class="fieldcontain ${hasErrors(bean: venueInstance, field: 'email', 'error')} ">
-	<label for="email">
-		<g:message code="venue.email.label" default="Email" />
-		
-	</label>
-	<g:field type="email" name="email" value="${venueInstance?.email}"/>
-
+<div class="row">
+	<div class="col-lg-4">
+		<div class="form-group ${hasErrors(bean: venueInstance, field: 'email', 'has-error')}">
+			<label class="control-label" for="email">Email</label>
+			<g:textField class="form-control" name="email" value="${venueInstance?.email}"/>
+		</div>
+	</div>
+	<div class="col-lg-4">
+		<div class="form-group ${hasErrors(bean: venueInstance, field: 'pricePerDay', 'has-error')}">
+			<label class="control-label" for="email">Price per Day
+				<span class="required-indicator">*</span>
+			</label>
+			<input type="number" class="form-control" name="pricePerDay" id="pricePerDay" min="0" step="10"
+				   value="${fieldValue(bean: venueInstance, field: 'pricePerDay')}">
+		</div>
+	</div>
+	<div class="col-lg-4">
+		<div class="form-group ${hasErrors(bean: venueInstance, field: 'seatsNumber', 'has-error')}">
+			<label class="control-label" for="email">Seats Number
+				<span class="required-indicator">*</span>
+			</label>
+			<input type="number" class="form-control" name="seatsNumber" id="seatsNumber" min="0" step="1"
+				   value="${fieldValue(bean: venueInstance, field: 'seatsNumber')}">
+		</div>
+	</div>
 </div>
-
-<div class="fieldcontain ${hasErrors(bean: venueInstance, field: 'phone', 'error')} ">
-	<label for="phone">
-		<g:message code="venue.phone.label" default="Phone" />
-		
-	</label>
-	<g:textField name="phone" value="${venueInstance?.phone}"/>
-
+<div class="row">
+	<div class="col-lg-4">
+		<div class="form-group ${hasErrors(bean: venueInstance, field: 'owner', 'has-error')}">
+			<label class="control-label" for="catering">Owner
+				<span class="required-indicator">*</span>
+			</label>
+			<g:select id="owner" name="owner.id" from="${owners}" optionKey="id"
+					  value="${venueInstance?.owner?.id}" class="many-to-one form-control"
+					  noSelection="['null': '']"/>
+		</div>
+	</div>
+	<div class="col-lg-4">
+		<div class="form-group ${hasErrors(bean: venueInstance, field: 'catering', 'has-error')}">
+			<label class="control-label" for="catering">Catering</label>
+			<g:select  id="catering" name="catering.id" from="${et.resources.Catering.list()}" optionKey="id"
+					   optionValue="name" value="${venueInstance?.catering?.id}" class="many-to-one form-control"
+					   noSelection="['null': '']"/>
+		</div>
+	</div>
+	<div class="col-lg-4">
+		<div class="form-group ${hasErrors(bean: venueInstance, field: 'location', 'has-error')}">
+			<label class="control-label" for="location">Location
+				<span class="required-indicator">*</span>
+			</label>
+			<g:textField class="form-control" name="location" value="${venueInstance?.location}"/>
+		</div>
+	</div>
 </div>
-
-<div class="fieldcontain ${hasErrors(bean: venueInstance, field: 'catering', 'error')} ">
-	<label for="catering">
-		<g:message code="venue.catering.label" default="Catering" />
-		
-	</label>
-	<g:select id="catering" name="catering.id" from="${et.resources.Catering.list()}" optionKey="id" value="${venueInstance?.catering?.id}" class="many-to-one" noSelection="['null': '']"/>
-
+<div class="row">
+	<div class="col-lg-4">
+		<div class="form-group">
+			<div class="checkbox">
+				<label>
+					<g:checkBox name="projectorAvailable" value="${venueInstance?.projectorAvailable}" />Projector available
+				</label>
+			</div>
+			<div class="checkbox">
+				<label>
+					<g:checkBox name="speakersAvailable" value="${venueInstance?.speakersAvailable}" />Speaker available
+				</label>
+			</div>
+			<div class="checkbox">
+				<label>
+					<g:checkBox name="ushersAvailable" value="${venueInstance?.ushersAvailable}" />Usher available
+				</label>
+			</div>
+		</div>
+	</div>
 </div>
-
-<div class="fieldcontain ${hasErrors(bean: venueInstance, field: 'availabilities', 'error')} ">
-	<label for="availabilities">
-		<g:message code="venue.availabilities.label" default="Availabilities" />
-		
-	</label>
-	<g:select name="availabilities" from="${et.resources.Availability.list()}" multiple="multiple" optionKey="id" size="5" value="${venueInstance?.availabilities*.id}" class="many-to-many"/>
-
-</div>
-
-<div class="fieldcontain ${hasErrors(bean: venueInstance, field: 'location', 'error')} required">
-	<label for="location">
-		<g:message code="venue.location.label" default="Location" />
-		<span class="required-indicator">*</span>
-	</label>
-	<g:textField name="location" required="" value="${venueInstance?.location}"/>
-
-</div>
-
-<div class="fieldcontain ${hasErrors(bean: venueInstance, field: 'name', 'error')} required">
-	<label for="name">
-		<g:message code="venue.name.label" default="Name" />
-		<span class="required-indicator">*</span>
-	</label>
-	<g:textField name="name" required="" value="${venueInstance?.name}"/>
-
-</div>
-
-<div class="fieldcontain ${hasErrors(bean: venueInstance, field: 'owner', 'error')} required">
-	<label for="owner">
-		<g:message code="venue.owner.label" default="Owner" />
-		<span class="required-indicator">*</span>
-	</label>
-	<g:select id="owner" name="owner.id" from="${et.participant.User.list()}" optionKey="id" required="" value="${venueInstance?.owner?.id}" class="many-to-one"/>
-
-</div>
-
-<div class="fieldcontain ${hasErrors(bean: venueInstance, field: 'pricePerDay', 'error')} required">
-	<label for="pricePerDay">
-		<g:message code="venue.pricePerDay.label" default="Price Per Day" />
-		<span class="required-indicator">*</span>
-	</label>
-	<g:field name="pricePerDay" value="${fieldValue(bean: venueInstance, field: 'pricePerDay')}" required=""/>
-
-</div>
-
-<div class="fieldcontain ${hasErrors(bean: venueInstance, field: 'projectorAvailable', 'error')} ">
-	<label for="projectorAvailable">
-		<g:message code="venue.projectorAvailable.label" default="Projector Available" />
-		
-	</label>
-	<g:checkBox name="projectorAvailable" value="${venueInstance?.projectorAvailable}" />
-
-</div>
-
-<div class="fieldcontain ${hasErrors(bean: venueInstance, field: 'seatsNumber', 'error')} required">
-	<label for="seatsNumber">
-		<g:message code="venue.seatsNumber.label" default="Seats Number" />
-		<span class="required-indicator">*</span>
-	</label>
-	<g:field name="seatsNumber" type="number" value="${venueInstance.seatsNumber}" required=""/>
-
-</div>
-
-<div class="fieldcontain ${hasErrors(bean: venueInstance, field: 'speakersAvailable', 'error')} ">
-	<label for="speakersAvailable">
-		<g:message code="venue.speakersAvailable.label" default="Speakers Available" />
-		
-	</label>
-	<g:checkBox name="speakersAvailable" value="${venueInstance?.speakersAvailable}" />
-
-</div>
-
-<div class="fieldcontain ${hasErrors(bean: venueInstance, field: 'ushersAvailable', 'error')} ">
-	<label for="ushersAvailable">
-		<g:message code="venue.ushersAvailable.label" default="Ushers Available" />
-		
-	</label>
-	<g:checkBox name="ushersAvailable" value="${venueInstance?.ushersAvailable}" />
-
-</div>
-

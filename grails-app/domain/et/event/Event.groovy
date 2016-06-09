@@ -1,7 +1,6 @@
 package et.event
 
 import et.participant.User
-import et.resources.Catering
 import et.resources.Venue
 
 class Event {
@@ -15,18 +14,16 @@ class Event {
     String phone
     String email
     Venue venue
-    Catering catering
     Integer maxParticipants = 0
 
-    static hasMany = [partecipants: User]
+    static hasMany = [participants: User]
 
     static constraints = {
         title blank: false
         description nullable: true
         phone nullable: true
         email nullable: true
-        partecipants nullable: true
-        catering nullable: true
+        participants nullable: true
         maxParticipants min: 0
     }
 }
