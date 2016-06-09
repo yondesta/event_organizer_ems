@@ -1,9 +1,9 @@
 package et.resources
 
-
+import et.participant.User
+import grails.transaction.Transactional
 
 import static org.springframework.http.HttpStatus.*
-import grails.transaction.Transactional
 
 @Transactional(readOnly = true)
 class VenueController {
@@ -20,7 +20,8 @@ class VenueController {
     }
 
     def create() {
-        respond new Venue(params)
+        def owners = User.executeQuery("select u from UserRole ur inner join ur.user u join ur.role r where r.authority = 'ROLE_RESOURCE_OWNER'")
+        [venueInstance: new Venue(params), owners: owners]
     }
 
     @Transactional
@@ -31,7 +32,8 @@ class VenueController {
         }
 
         if (venueInstance.hasErrors()) {
-            respond venueInstance.errors, view:'create'
+            def owners = User.executeQuery("select u from UserRole ur inner join ur.user u join ur.role r where r.authority = 'ROLE_RESOURCE_OWNER'")
+            respond venueInstance.errors, view:'create', model: [owners: owners]
             return
         }
 
