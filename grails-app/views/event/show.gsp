@@ -9,7 +9,14 @@
 	<body>
 		<div class="row">
 			<div class="col-lg-12">
-				<h1 class="page-header">${eventInstance.title} details</h1>
+				<h1 class="page-header">
+					<button class="btn ${eventInstance.category.buttonClass} btn-circle btn-lg" type="button">
+						<i class="fa ${eventInstance.category.icon}"></i>
+					</button>
+					${eventInstance.title.toUpperCase()}
+					<small>${eventInstance.startDate.format('dd/MM/yyyy')} - ${eventInstance.endDate.format('dd/MM/yyyy')}</small>
+				</h1>
+
 			</div>
 		</div>
 		<g:if test="${flash.message}">
@@ -18,59 +25,40 @@
 			</div>
 		</g:if>
 		<div class="row">
-			<div class="lg-12">
-				<div class="table-responsive">
-					<table class="table">
-						<thead>
-							<tr>
-								<th></th>
-								<th></th>
-							</tr>
-						</thead>
-						<tboby>
-							<tr>
-								<td>Title</td>
-								<td><g:fieldValue bean="${eventInstance}" field="title"/></td>
-							</tr>
-							<tr>
-								<td>Description</td>
-								<td><g:fieldValue bean="${eventInstance}" field="description"/></td>
-							</tr>
-							<tr>
-								<td>Category</td>
-								<td>${eventInstance.category.name}</td>
-							</tr>
-							<tr>
-								<td>Start Date</td>
-								<td>${eventInstance.startDate.format('dd/MM/yyyy')}</td>
-							</tr>
-							<tr>
-								<td>End Date</td>
-								<td>${eventInstance.endDate.format('dd/MM/yyyy')}</td>
-							</tr>
-							<tr>
-								<td>Phone</td>
-								<td><g:fieldValue bean="${eventInstance}" field="phone"/></td>
-							</tr>
-							<tr>
-								<td>Email</td>
-								<td><g:fieldValue bean="${eventInstance}" field="email"/></td>
-							</tr>
-							<tr>
-								<td>Venue</td>
-								<td><g:fieldValue bean="${eventInstance}" field="venue"/></td>
-							</tr>
-						</tboby>
-					</table>
+			<div class="col-lg-3">
+				<img src="${createLink(uri: '/images/')}${eventInstance.venue.picture}" width="100%"/>
+			</div>
+			<div class="col-lg-5">
+				<p>${eventInstance.description}</p>
+			</div>
+			<div class="col-lg-4">
+				<div class="well">
+					<h2>${eventInstance.maxParticipants - (eventInstance.participants ? eventInstance.participants.size() : 0)} <small>available places</small></h2>
+					<sec:ifLoggedIn>
+						<div class="text-right">
+							<form action="${createLink(controller: 'event', action: 'registerUser', id: eventInstance.id)}" role="form">
+								<button class="btn btn-default" type="submit">Register</button>
+							</form>
+						</div>
+					</sec:ifLoggedIn>
+				</div>
+				<div class="panel panel-info">
+					<div class="panel-heading">Contacts</div>
+					<div class="panel-body">
+						<p>Email: <strong>${eventInstance.email}</strong></p>
+						<p>Phone: <strong>${eventInstance.phone}</strong></p>
+					</div>
 				</div>
 			</div>
 		</div>
-		<g:form url="[resource:eventInstance, action:'delete']" method="DELETE">
-			<fieldset class="buttons">
-				<g:actionSubmit class="btn btn-primary" action="edit" value="Edit" resource="${eventInstance}"/>
-				<g:actionSubmit class="btn btn-default" action="delete" value="Delete" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
-			</fieldset>
-		</g:form>
+		<sec:ifAllGranted roles="ROLE_EVENT_OWNER">
+			<g:form url="[resource:eventInstance, action:'delete']" method="DELETE">
+				<fieldset class="buttons">
+					<g:actionSubmit class="btn btn-primary" action="edit" value="Edit" resource="${eventInstance}"/>
+					<g:actionSubmit class="btn btn-default" action="delete" value="Delete" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
+				</fieldset>
+			</g:form>
+		</sec:ifAllGranted>
 		</div>
 	</body>
 </html>

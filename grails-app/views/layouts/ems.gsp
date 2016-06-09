@@ -28,7 +28,8 @@
             <!-- /.navbar-header -->
 
             <ul class="nav navbar-top-links navbar-right">
-                <li class="dropdown">
+                <sec:ifLoggedIn>
+                    <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                         <i class="fa fa-envelope fa-fw"></i>  <i class="fa fa-caret-down"></i>
                     </a>
@@ -78,8 +79,10 @@
                     </ul>
                     <!-- /.dropdown-messages -->
                 </li>
+                </sec:ifLoggedIn>
                 <!-- /.dropdown -->
-                <li class="dropdown">
+                <sec:ifLoggedIn>
+                    <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                         <i class="fa fa-bell fa-fw"></i>  <i class="fa fa-caret-down"></i>
                     </a>
@@ -138,6 +141,7 @@
                     </ul>
                     <!-- /.dropdown-alerts -->
                 </li>
+                </sec:ifLoggedIn>
                 <!-- /.dropdown -->
                 <sec:ifLoggedIn>
                     <li class="dropdown">
@@ -201,6 +205,17 @@
                             <ul class="nav nav-second-level">
                                 <li>
                                     <a href="${createLink(controller: 'event', action: 'create')}">Add New Event</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-money"></i> Resources<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="${createLink(controller: 'venue', action: 'create')}">Add Venue</a>
+                                </li>
+                                <li>
+                                    <a href="${createLink(controller: 'catering', action: 'create')}">Add Catering</a>
                                 </li>
                             </ul>
                         </li>

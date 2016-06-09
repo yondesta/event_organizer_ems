@@ -39,7 +39,7 @@ class AdminController {
         }
         participant.save(flush: true, failOnError: true)
         UserRole.create participant, Role.findByAuthority('ROLE_USER'), true
-        event.addToPartecipants(participant)
+        event.addToParticipants(participant)
         event.save(flush: true, failOnError: true)
         if (sendEmail)
             log.info "Sending registration email to $participant.email"

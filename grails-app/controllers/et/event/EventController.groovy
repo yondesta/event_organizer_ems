@@ -8,6 +8,8 @@ import grails.transaction.Transactional
 @Transactional(readOnly = true)
 class EventController {
 
+    def springSecurityService
+
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     def index(Integer max) {
@@ -36,9 +38,8 @@ class EventController {
             return
         }
 
-        def owners = User.executeQuery("select u from UserRole ur inner join ur.user u join ur.role r where r.authority = 'ROLE_EVENT_OWNER'")
-
         if (eventInstance.hasErrors()) {
+            def owners = User.executeQuery("select u from UserRole ur inner join ur.user u join ur.role r where r.authority = 'ROLE_EVENT_OWNER'")
             respond eventInstance.errors, view:'create', model: [owners: owners]
             return
         }
@@ -109,5 +110,18 @@ class EventController {
             }
             '*'{ render status: NOT_FOUND }
         }
+    }
+
+    def registerUser(Event eventInstance) {
+        def user = springSecurityService.getCurrentUser()
+        if (user in eventInstance.participants) {
+            flash.message = "You are already registered to the event."
+            flash.messageType = 'alert-warning'
+        } else {
+            eventInstance.addToParticipants(user)
+            eventInstance.save(flush: true, failOnError: true)
+            flash.message = "You successfully registered to the event!"
+        }
+        redirect action: 'show', id: eventInstance.id
     }
 }

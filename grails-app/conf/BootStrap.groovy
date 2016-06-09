@@ -54,14 +54,33 @@ class BootStrap {
 		def eventOwners = [david, cleethus]
 		def categories = []
 		def icons = ['fa-tag', 'fa-h-square', 'fa-cutlery', 'fa-lightbulb-o', 'fa-dollar']
-		def colors = ['panel-primary', 'panel-green', 'panel-yellow', 'panel-red', 'panel-default']
+		def panelClassList = ['panel-primary', 'panel-green', 'panel-yellow', 'panel-red', 'panel-default']
+		def buttonClassList = ['btn-primary', 'btn-success', 'btn-warning', 'btn-danger', 'btn-default']
 		(1..5).each {
 			categories << new Category(
 					name: "Category $it",
 					icon: icons[it - 1],
-					color: colors[it - 1]
+					panelClass: panelClassList[it - 1],
+					buttonClass: buttonClassList[it - 1]
 			).save(flush: true, failOnError: true)
 		}
+		def caterings = []
+		(1..3).each {
+			caterings << new Catering(
+					name: "Catering $it",
+					phone: "0912345678$it",
+					email: "cat$it@ems.et",
+					lunchPrice: 60,
+					teaBreakPrice: 30,
+					snackPrice: 15
+			).save(flush: true, failOnError: true)
+		}
+		def pictureList = [
+		        'venue1.jpg',
+		        'venue2.jpg',
+		        'venue3.jpg'
+		]
+
 		List<Venue> venues = []
 		(1..3).each {
 			def seatsNumber = (rnd.nextInt(30) + 10) * 10
@@ -70,7 +89,9 @@ class BootStrap {
 					location: locations[it - 1],
 					seatsNumber: seatsNumber,
 					pricePerDay: rnd.nextInt(30) * 100,
-					owner: eventOwners[it % 2]
+					owner: eventOwners[it % 2],
+					categoring: caterings[it - 1],
+					picture: pictureList[it - 1]
 			).save(flush: true, failOnError: true)
 		}
 		(1..100).each {
@@ -79,27 +100,20 @@ class BootStrap {
 			def venue = venues[it % 3]
 			def event = new Event(
 					title: "Event $it",
+					description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt est vitae ultrices accumsan. Aliquam ornare lacus adipiscing, posuere lectus et, fringilla augue.",
 					category: categories[it % 5],
 					maxParticipants: venue.seatsNumber,
 					owner: eventOwners[it % 2],
 					startDate: new Date(2016 - 1900, eventStartMonth, eventStartDay),
 					endDate: new Date(2016 - 1900, eventStartMonth, eventStartDay + it % 3),
-					venue: venue
+					venue: venue,
+					phone: '09123456',
+					email: "event$it@ems.et"
 			)
 			(0..rnd.nextInt(venue.seatsNumber)).each { idx ->
-				event.addToPartecipants participants[rnd.nextInt(participants.size() - 1)]
+				event.addToParticipants participants[rnd.nextInt(participants.size() - 1)]
 			}
 			event.save flush: true, failOnError: true
-		}
-		(1..3).each {
-			new Catering(
-					name: "Catering $it",
-					phone: "0912345678$it",
-					email: "cat$it@ems.et",
-					lunchPrice: 60,
-					teaBreakPrice: 30,
-					snackPrice: 15
-			).save(flush: true, failOnError: true)
 		}
     }
     def destroy = {

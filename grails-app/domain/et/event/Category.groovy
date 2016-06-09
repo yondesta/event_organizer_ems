@@ -5,7 +5,8 @@ class Category {
     String name
     String description
     String icon
-    String color
+    String panelClass
+    String buttonClass
 
     static constraints = {
         description nullable: true

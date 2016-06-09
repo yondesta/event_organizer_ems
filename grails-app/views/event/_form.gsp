@@ -22,12 +22,6 @@
 		</div>
 	</div>
 	<div class="col-lg-4">
-		<div class="form-group ${hasErrors(bean: eventInstance, field: 'catering', 'has-error')}">
-			<label class="control-label" for="catering">Catering</label>
-			<g:select  id="catering" name="catering.id" from="${et.resources.Catering.list()}" optionKey="id"
-					   optionValue="name" value="${eventInstance?.catering?.id}" class="many-to-one form-control"
-					   noSelection="['null': '']"/>
-		</div>
 		<div class="form-group ${hasErrors(bean: eventInstance, field: 'category', 'has-error')}">
 			<label class="control-label" for="category">Category
 				<span class="required-indicator">*</span>
