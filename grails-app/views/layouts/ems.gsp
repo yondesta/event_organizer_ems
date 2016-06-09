@@ -183,7 +183,7 @@
                             <a href="${createLink(uri: '/')}"><i class="fa fa-home fa-fw"></i> Home</a>
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-info-circle fa-fw"></i> About Us</a>
+                            <a href="${createLink(uri: '/aboutus')}"><i class="fa fa-info-circle fa-fw"></i> About Us</a>
                         </li>
                         <li>
                             <a href="#"><i class="fa fa-envelope fa-fw"></i> Contact Us</a>
