@@ -1,5 +1,6 @@
 import et.event.Category
 import et.event.Event
+import et.event.Notification
 import et.event.UserEvent
 import et.participant.Role
 import et.participant.User
@@ -34,7 +35,7 @@ class BootStrap {
 		UserRole.create yonas, eventOwnerRole, true
 		UserRole.create yonas, resourceOwnerRole, true
 		// Guble is a resource owner
-		UserRole.create guble, resourceOwnerRole, true
+		UserRole.create guble, userRole, true
 
 		def femaleNames = ['Alemitu', 'Bekelu', 'Bayese', 'Chalitu', 'Abedu', 'Nedi', 'Lakech', 'Mulunsh', 'Jifare', 'Gelane']
 		def maleNames = ['Direba', 'Achala', 'Terefe', 'Direbsa', 'Desalegn', 'Dabesa', 'Desu', 'Feyera', 'Worku', 'Tereda']
@@ -43,7 +44,7 @@ class BootStrap {
 		Random rnd = new Random()
 
 		List<User> participants = []
-		(1..100).each {
+		(1..50).each {
 			def gender = it % 2 == 0 ? 'M' : 'F'
 			def lastName = lastNames[rnd.nextInt(9)]
 			def firstName = gender == 'M' ? maleNames[rnd.nextInt(9)] : femaleNames[rnd.nextInt(9)]
@@ -101,7 +102,7 @@ class BootStrap {
 					picture: pictureList[it - 1]
 			).save(flush: true, failOnError: true)
 		}
-		(1..100).each {
+		(1..50).each {
 			def eventStartMonth = it % 12
 			def eventStartDay = it % 29
 			def venue = venues[it % 3]
@@ -117,7 +118,16 @@ class BootStrap {
 					phone: '09123456',
 					email: "event$it@ems.et"
 			)
+			(1..it % 4).each { idx ->
+				event.addToNotifications(new Notification(
+						title: "Notification $idx",
+						message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt est vitae ultrices accumsan."
+				))
+			}
 			event.save flush: true, failOnError: true
+			if (it % 20 == 0) {
+				UserEvent.create guble, event, true
+			}
 			(0..rnd.nextInt(venue.seatsNumber)).each { idx ->
 				UserEvent.create participants[rnd.nextInt(participants.size() - 1)], event, true
 			}

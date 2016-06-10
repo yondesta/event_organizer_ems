@@ -183,15 +183,30 @@
                             </div>
                             <!-- /input-group -->
                         </li>
-                        <li>
-                            <a href="${createLink(uri: '/')}"><i class="fa fa-home fa-fw"></i> Home</a>
-                        </li>
+                        <sec:ifNotLoggedIn>
+                            <li>
+                                <a href="${createLink(uri: '/')}"><i class="fa fa-home fa-fw"></i> Home</a>
+                            </li>
+                        </sec:ifNotLoggedIn>
                         <li>
                             <a href="${createLink(uri: '/aboutus')}"><i class="fa fa-info-circle fa-fw"></i> About Us</a>
                         </li>
                         <li>
                             <a href="#"><i class="fa fa-envelope fa-fw"></i> Contact Us</a>
                         </li>
+                        <sec:ifAnyGranted roles="ROLE_USER">
+                            <li>
+                                <a href="#"><i class="fa fa-user"></i> User Menu<span class="fa arrow"></span></a>
+                                <ul class="nav nav-second-level">
+                                    <li>
+                                        <a href="${createLink(controller: 'user', action: 'userHome')}"> Home</a>
+                                    </li>
+                                    <li>
+                                        <a href="${createLink(controller: 'event', action: 'index')}"> Event List</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </sec:ifAnyGranted>
                         <sec:ifAnyGranted roles="ROLE_ADMIN, ROLE_FACILITATOR">
                             <li>
                                 <a href="#"><i class="fa fa-user"></i> Participants<span class="fa arrow"></span></a>

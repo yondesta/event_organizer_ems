@@ -7,7 +7,7 @@ import grails.transaction.Transactional
 class EventService {
 
     def isRegistrationOpen(User u, Event e) {
-        def userEvent = UserEvent.findByParticipant(u)
-        userEvent && userEvent.event != e && e.registrationDeadline >= new Date()
+        def userEvent = UserEvent.findByParticipantAndEvent(u, e)
+        !userEvent && e.registrationDeadline >= new Date()
     }
 }

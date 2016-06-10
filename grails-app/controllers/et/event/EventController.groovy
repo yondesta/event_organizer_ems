@@ -18,15 +18,13 @@ class EventController {
         params.max = Math.min(max ?: 12, 100)
         params.sort = 'startDate'
         params.order = 'asc'
-        def events = Event.createCriteria().list(params) {
-            gt 'startDate', new Date()
-        }
+        def events = Event.findAllByStartDateGreaterThan(new Date(), params)
         [events: events, eventInstanceCount: Event.count()]
     }
 
     def show(Event eventInstance) {
         boolean isRegistrationOpen = eventService.isRegistrationOpen(springSecurityService.currentUser, eventInstance)
-        respond eventInstance, model: [isRegistrationOpen: isRegistrationOpen]
+        [eventInstance: eventInstance, isRegistrationOpen: isRegistrationOpen]
     }
 
     def create() {

@@ -17,6 +17,9 @@ class Event {
     Integer maxParticipants = 0
     Date registrationDeadline
     BigDecimal registrationFee = 0
+    boolean isOpen = true
+
+    static hasMany = [notifications: Notification]
 
     static constraints = {
         title blank: false
@@ -25,6 +28,7 @@ class Event {
         email nullable: true
         maxParticipants min: 0
         registrationFee min: new BigDecimal(0)
+        notifications nullable: true
     }
 
     def beforeValidate() {

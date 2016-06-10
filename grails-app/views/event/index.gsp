@@ -9,7 +9,12 @@
 	<body>
 		<div class="row">
 			<div class="col-lg-12">
-				<h1 class="page-header">Welcome to EMS! <small>...check our upcoming events!</small></h1>
+				<sec:ifNotLoggedIn>
+					<h1 class="page-header">Welcome to EMS! <small>...check our upcoming events!</small></h1>
+				</sec:ifNotLoggedIn>
+				<sec:ifLoggedIn>
+					<h1 class="page-header">Event List</h1>
+				</sec:ifLoggedIn>
 			</div>
 		</div>
 		<g:if test="${flash.message}">
@@ -34,7 +39,7 @@
 									%{--<div class="col-xs-6">--}%
 										%{--<div>${event.participants ? event.participants.size() : 0} participants</div>--}%
 									%{--</div>--}%
-									<div class="col-xs-6 text-right">
+									<div class="col-xs-12 text-right">
 										<div>${event.maxParticipants - UserEvent.countByEvent(event)} available</div>
 									</div>
 								</div>

@@ -1,6 +1,8 @@
 package et.participant
 
-
+import et.event.Event
+import et.event.UserEvent
+import grails.plugin.springsecurity.SpringSecurityUtils
 
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
@@ -8,7 +10,42 @@ import grails.transaction.Transactional
 @Transactional(readOnly = true)
 class UserController {
 
+    def springSecurityService
+
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+
+    def home() {
+        if (SpringSecurityUtils.ifAllGranted('ROLE_ADMIN')) {
+            println 'Admin home page...'
+            render view: 'index'
+            //redirect controller: '...', action: '...'
+            return
+        } else if (SpringSecurityUtils.ifAllGranted('ROLE_USER')) {
+            log.info 'User logged in...'
+            redirect controller: 'user', action: 'userHome'
+            return
+        } else if (SpringSecurityUtils.ifAllGranted('ROLE_FACILITATOR')) {
+            println 'Facilitator home page...'
+            render view: 'index'
+            //redirect controller: '...', action: '...'
+            return
+        } else {
+            redirect uri: '/'
+        }
+    }
+
+    def userHome() {
+        def userInstance = springSecurityService.currentUser
+        def userEvents = Event.executeQuery("""select e from UserEvent ue inner join ue.event e
+where ue.participant = :userInstance and
+e.endDate >= :date order by e.startDate asc""",
+                [userInstance: userInstance, date: new Date()])
+        def eventsNotifications = []
+        userEvents.each { event ->
+            eventsNotifications << event.notifications
+        }
+        [userInstance : userInstance, userEvents: userEvents, eventsNotifications: eventsNotifications.flatten()]
+    }
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
