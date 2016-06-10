@@ -1,5 +1,6 @@
 import et.event.Category
 import et.event.Event
+import et.event.UserEvent
 import et.participant.Role
 import et.participant.User
 import et.participant.UserRole
@@ -22,11 +23,17 @@ class BootStrap {
 		def cleethus = new User(username: 'cleethus', password: 'cleethus', firstName: 'Cleethus', lastName: 'Abba', email: 'cleethus@ems.et', gender: 'M').save(flush: true, failOnError: true)
 		def guble = new User(username: 'guble', password: 'guble', firstName: 'Guble', lastName: 'Driver', email: 'guble@ems.et', gender: 'M').save(flush: true, failOnError: true)
 
+		// Admin user has all permissions
 		UserRole.create admin, adminRole, true
+		UserRole.create admin, facilitatorRole, true
+		UserRole.create admin, eventOwnerRole, true
+		UserRole.create admin, resourceOwnerRole, true
+		// Nico is a facilitator
 		UserRole.create nico, facilitatorRole, true
-		UserRole.create yonas, facilitatorRole, true
-		UserRole.create david, eventOwnerRole, true
-		UserRole.create cleethus, eventOwnerRole, true
+		// Yonas is an event and resource owner
+		UserRole.create yonas, eventOwnerRole, true
+		UserRole.create yonas, resourceOwnerRole, true
+		// Guble is a resource owner
 		UserRole.create guble, resourceOwnerRole, true
 
 		def femaleNames = ['Alemitu', 'Bekelu', 'Bayese', 'Chalitu', 'Abedu', 'Nedi', 'Lakech', 'Mulunsh', 'Jifare', 'Gelane']
@@ -110,10 +117,10 @@ class BootStrap {
 					phone: '09123456',
 					email: "event$it@ems.et"
 			)
-			(0..rnd.nextInt(venue.seatsNumber)).each { idx ->
-				event.addToParticipants participants[rnd.nextInt(participants.size() - 1)]
-			}
 			event.save flush: true, failOnError: true
+			(0..rnd.nextInt(venue.seatsNumber)).each { idx ->
+				UserEvent.create participants[rnd.nextInt(participants.size() - 1)], event, true
+			}
 		}
     }
     def destroy = {
