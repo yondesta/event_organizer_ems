@@ -1,5 +1,5 @@
 
-<%@ page import="et.event.Event" %>
+<%@ page import="et.event.UserEvent; et.event.Event" %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -33,14 +33,15 @@
 			</div>
 			<div class="col-lg-4">
 				<div class="well">
-					<h2>${eventInstance.maxParticipants - (eventInstance.participants ? eventInstance.participants.size() : 0)} <small>available places</small></h2>
-					<sec:ifLoggedIn>
+					<h2>${eventInstance.maxParticipants - UserEvent.countByEvent(eventInstance)} <small>available places</small></h2>
+					<em>Registration deadline: </em><strong>${eventInstance.registrationDeadline.format('dd/MM/yyyy')}</strong>
+					<g:if test="${isRegistrationOpen}">
 						<div class="text-right">
 							<form action="${createLink(controller: 'event', action: 'registerUser', id: eventInstance.id)}" role="form">
 								<button class="btn btn-default" type="submit">Register</button>
 							</form>
 						</div>
-					</sec:ifLoggedIn>
+					</g:if>
 				</div>
 				<div class="panel panel-info">
 					<div class="panel-heading">Contacts</div>

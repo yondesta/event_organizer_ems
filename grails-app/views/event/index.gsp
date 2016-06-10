@@ -1,5 +1,5 @@
 
-<%@ page import="et.event.Event" %>
+<%@ page import="et.event.UserEvent; et.event.Event" %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -31,11 +31,11 @@
 									</div>
 								</div>
 								<div class="row">
-									<div class="col-xs-6">
-										<div>${event.participants ? event.participants.size() : 0} participants</div>
-									</div>
+									%{--<div class="col-xs-6">--}%
+										%{--<div>${event.participants ? event.participants.size() : 0} participants</div>--}%
+									%{--</div>--}%
 									<div class="col-xs-6 text-right">
-										<div>${event.maxParticipants - (event.participants ? event.participants.size() : 0)} available</div>
+										<div>${event.maxParticipants - UserEvent.countByEvent(event)} available</div>
 									</div>
 								</div>
 							</div>

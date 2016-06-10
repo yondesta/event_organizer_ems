@@ -192,33 +192,39 @@
                         <li>
                             <a href="#"><i class="fa fa-envelope fa-fw"></i> Contact Us</a>
                         </li>
-                        <li>
-                            <a href="#"><i class="fa fa-user"></i> Participants<span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                                <li>
-                                    <a href="${createLink(controller: 'admin', action: 'registerParticipant')}">Register</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa fa-calendar"></i> Events<span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                                <li>
-                                    <a href="${createLink(controller: 'event', action: 'create')}">Add New Event</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa fa-money"></i> Resources<span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                                <li>
-                                    <a href="${createLink(controller: 'venue', action: 'create')}">Add Venue</a>
-                                </li>
-                                <li>
-                                    <a href="${createLink(controller: 'catering', action: 'create')}">Add Catering</a>
-                                </li>
-                            </ul>
-                        </li>
+                        <sec:ifAnyGranted roles="ROLE_ADMIN, ROLE_FACILITATOR">
+                            <li>
+                                <a href="#"><i class="fa fa-user"></i> Participants<span class="fa arrow"></span></a>
+                                <ul class="nav nav-second-level">
+                                    <li>
+                                        <a href="${createLink(controller: 'admin', action: 'registerParticipant')}">Register</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </sec:ifAnyGranted>
+                        <sec:ifAllGranted roles="ROLE_EVENT_OWNER">
+                            <li>
+                                <a href="#"><i class="fa fa-calendar"></i> Events<span class="fa arrow"></span></a>
+                                <ul class="nav nav-second-level">
+                                    <li>
+                                        <a href="${createLink(controller: 'event', action: 'create')}">Add New Event</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </sec:ifAllGranted>
+                        <sec:ifAllGranted roles="ROLE_RESOURCE_OWNER">
+                            <li>
+                                <a href="#"><i class="fa fa-money"></i> Resources<span class="fa arrow"></span></a>
+                                <ul class="nav nav-second-level">
+                                    <li>
+                                        <a href="${createLink(controller: 'venue', action: 'create')}">Add Venue</a>
+                                    </li>
+                                    <li>
+                                        <a href="${createLink(controller: 'catering', action: 'create')}">Add Catering</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </sec:ifAllGranted>
                     </ul>
                 </div>
                 <!-- /.sidebar-collapse -->
