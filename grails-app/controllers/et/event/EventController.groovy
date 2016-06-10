@@ -1,6 +1,7 @@
 package et.event
 
 import et.participant.User
+import et.participant.UserRole
 
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
@@ -9,6 +10,7 @@ import grails.transaction.Transactional
 class EventController {
 
     def springSecurityService
+    def eventService
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
@@ -23,7 +25,8 @@ class EventController {
     }
 
     def show(Event eventInstance) {
-        respond eventInstance
+        boolean isRegistrationOpen = eventService.isRegistrationOpen(springSecurityService.currentUser, eventInstance)
+        respond eventInstance, model: [isRegistrationOpen: isRegistrationOpen]
     }
 
     def create() {
@@ -114,12 +117,12 @@ class EventController {
 
     def registerUser(Event eventInstance) {
         def user = springSecurityService.getCurrentUser()
-        if (user in eventInstance.participants) {
+        if (UserEvent.findByParticipant(user)?.event == eventInstance) {
             flash.message = "You are already registered to the event."
             flash.messageType = 'alert-warning'
         } else {
-            eventInstance.addToParticipants(user)
             eventInstance.save(flush: true, failOnError: true)
+            UserEvent.create user, eventInstance, true
             flash.message = "You successfully registered to the event!"
         }
         redirect action: 'show', id: eventInstance.id

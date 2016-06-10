@@ -1,6 +1,7 @@
 package et.participant
 
 import et.event.Event
+import et.event.UserEvent
 import grails.transaction.Transactional
 
 class AdminController {
@@ -39,8 +40,9 @@ class AdminController {
         }
         participant.save(flush: true, failOnError: true)
         UserRole.create participant, Role.findByAuthority('ROLE_USER'), true
-        event.addToParticipants(participant)
         event.save(flush: true, failOnError: true)
+        participant.save(flush: true, failOnError: true)
+        UserEvent.create participant, event, true
         if (sendEmail)
             log.info "Sending registration email to $participant.email"
         flash.message = 'Registration successful!'

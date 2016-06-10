@@ -15,15 +15,25 @@ class Event {
     String email
     Venue venue
     Integer maxParticipants = 0
-
-    static hasMany = [participants: User]
+    Date registrationDeadline
+    BigDecimal registrationFee = 0
 
     static constraints = {
         title blank: false
         description nullable: true
         phone nullable: true
         email nullable: true
-        participants nullable: true
         maxParticipants min: 0
+        registrationFee min: new BigDecimal(0)
     }
+
+    def beforeValidate() {
+        if(!registrationDeadline)
+            registrationDeadline = startDate - 1
+    }
+
+//    def beforeUpdate() {
+//        if(!registrationDeadline)
+//            registrationDeadline = startDate - 1
+//    }
 }

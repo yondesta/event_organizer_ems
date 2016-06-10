@@ -1,5 +1,6 @@
 package et.participant
 
+import et.event.Event
 import groovy.transform.EqualsAndHashCode
 import groovy.transform.ToString
 
