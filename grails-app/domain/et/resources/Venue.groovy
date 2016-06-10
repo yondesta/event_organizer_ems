@@ -27,7 +27,7 @@ class Venue {
         catering nullable: true
         seatsNumber min: 0
         pricePerDay min: new BigDecimal(0)
-        picture: nullable: true
+        picture nullable: true
     }
 
     String toString() {
