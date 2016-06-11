@@ -17,7 +17,7 @@ class UserController {
         User userInstance = springSecurityService.currentUser
         def userEvents
         if (SpringSecurityUtils.ifAnyGranted('ROLE_ADMIN, ROLE_FACILITATOR')) {
-            userEvents = Event.list([sort: 'startDate', order: 'asc'])
+            userEvents = Event.findAllByEndDateGreaterThan(new Date(), [sort: 'startDate', order: 'asc'])
         } else if (SpringSecurityUtils.ifAllGranted('ROLE_EVENT_OWNER')) {
             log.info 'Event owner logged in...'
             userEvents = Event.findAllByOwnerAndStartDateGreaterThan(userInstance, new Date())
