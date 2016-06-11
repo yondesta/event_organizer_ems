@@ -16,14 +16,14 @@
     </div>
 </g:if>
 <div class="row">
-    <div class="col-lg-6">
+    <div class="col-lg-8">
         <g:each in="${userEvents}" var="event" status="idx">
             <div class="col-lg-6 col-md-12">
                 <div class="panel ${event.category.panelClass}">
                     <div class="panel-heading">
                         <div class="row">
                             <div class="col-xs-3">
-                                <i class="fa ${event.category.icon} fa-5x"></i>
+                                <i class="fa ${event.category.icon} fa-3x"></i>
                             </div>
                             <div class="col-xs-9 text-right">
                                 <div class="huge">${event.title}</div>
@@ -31,7 +31,7 @@
                         </div>
                         <div class="row">
                             <div class="col-xs-12 text-right">
-                                <div>${event.maxParticipants - et.event.UserEvent.countByEvent(event)} available</div>
+                                <div>${event.maxParticipants - et.event.UserEvent.countByEvent(event)} places available</div>
                             </div>
                         </div>
                     </div>
@@ -46,7 +46,7 @@
             </div>
         </g:each>
     </div>
-    <div class="col-lg-6">
+    <div class="col-lg-4">
         <div class="chat-panel panel panel-default">
             <div class="panel-heading">
                 <i class="fa fa-comments fa-fw"></i>

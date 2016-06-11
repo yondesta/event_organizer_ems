@@ -11,12 +11,10 @@
                 <div class="header">
                     <strong class="primary-font">${notification.event.title} - ${notification.title}</strong>
                     <small class="pull-right text-muted">
-                        <i class="fa fa-clock-o fa-fw"></i> ${TimeCategory.minus(new Date(),notification.dateCreated)}
+                        <i class="fa fa-clock-o fa-fw"></i> ${notification.elapsedTime}
                     </small>
                 </div>
-                <p>
-                    ${notification.message}
-                </p>
+                <p>${notification.message}</p>
             </div>
         </li>
     </g:each>
