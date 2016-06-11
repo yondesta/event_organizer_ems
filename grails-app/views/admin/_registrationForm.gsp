@@ -31,13 +31,13 @@
         </div>
     </div>
     <div class="col-lg-4">
-        <div class="form-group ${hasErrors(bean: userInstance, field: 'password', 'has-error')}">
-            <label class="control-label" for="user.password">
-                Password
-                <span class="required-indicator">*</span>
-            </label>
-            <g:passwordField class="form-control" name="user.password" datatype="password" required="" value="${userInstance?.password}"/>
-        </div>
+        %{--<div class="form-group ${hasErrors(bean: userInstance, field: 'password', 'has-error')}">--}%
+            %{--<label class="control-label" for="user.password">--}%
+                %{--Password--}%
+                %{--<span class="required-indicator">*</span>--}%
+            %{--</label>--}%
+            %{--<g:passwordField class="form-control" name="user.password" datatype="password" required="" value="${userInstance?.password}"/>--}%
+        %{--</div>--}%
         <div class="form-group ${hasErrors(bean: userInstance, field: 'lastName', 'has-error')}">
             <label class="control-label" for="user.password">
                 Last Name
@@ -54,13 +54,13 @@
         </div>
     </div>
     <div class="col-lg-4">
-        <div class="form-group ${hasErrors(bean: userInstance, field: 'confirmPassword', 'has-error')}">
-            <label class="control-label" for="user.password">
-                Confirm Password
-                <span class="required-indicator">*</span>
-            </label>
-            <g:passwordField class="form-control" name="confirmPassword" datatype="password" required="" value=""/>
-        </div>
+        %{--<div class="form-group ${hasErrors(bean: userInstance, field: 'confirmPassword', 'has-error')}">--}%
+            %{--<label class="control-label" for="confirmPassword">--}%
+                %{--Confirm Password--}%
+                %{--<span class="required-indicator">*</span>--}%
+            %{--</label>--}%
+            %{--<g:passwordField class="form-control" name="confirmPassword" datatype="password" required="" value=""/>--}%
+        %{--</div>--}%
         <div class="form-group ${hasErrors(bean: userInstance, field: 'gender', 'has-error')}">
             <label class="control-label">
                 Gender

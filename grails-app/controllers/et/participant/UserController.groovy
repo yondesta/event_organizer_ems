@@ -19,10 +19,8 @@ class UserController {
         if (SpringSecurityUtils.ifAnyGranted('ROLE_ADMIN, ROLE_FACILITATOR')) {
             userEvents = Event.findAllByEndDateGreaterThan(new Date(), [sort: 'startDate', order: 'asc'])
         } else if (SpringSecurityUtils.ifAllGranted('ROLE_EVENT_OWNER')) {
-            log.info 'Event owner logged in...'
             userEvents = Event.findAllByOwnerAndStartDateGreaterThan(userInstance, new Date())
         } else if (SpringSecurityUtils.ifAllGranted('ROLE_USER')) {
-            log.info 'User logged in...'
             userEvents = Event.executeQuery(
                     """select e from UserEvent ue inner join ue.event e
                 where ue.participant = :userInstance and
@@ -33,6 +31,7 @@ class UserController {
             redirect uri: '/'
             return
         }
+        log.info "User ${userInstance} with roles ${userInstance.getAuthorities()?.authority?.join(', ')} logged in..."
         [userInstance : userInstance, userEvents: userEvents]
     }
 

@@ -88,6 +88,7 @@ grails.hibernate.osiv.readonly = false
 environments {
     development {
         grails.logging.jul.usebridge = true
+        grails.serverURL = "http://192.168.1.26:8080/event_organizer_ems"
     }
     production {
         grails.logging.jul.usebridge = false
@@ -118,6 +119,8 @@ log4j.main = {
     trace   'grails.app'
 }
 
+//Registration
+registration.expired.ms = 1 * 60 * 1000
 
 // Added by the Spring Security Core plugin:
 grails.plugin.springsecurity.userLookup.userDomainClassName = 'et.participant.User'
@@ -142,6 +145,7 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 	'/venue/**':		        ['permitAll'],
 	'/aboutus':					['permitAll'],
 	'/aboutus.gsp':				['permitAll'],
-	'/notification/**':			['isFullyAuthenticated()']
+	'/notification/**':			['isFullyAuthenticated()'],
+	'/registration/**':			['permitAll']
 ]
 

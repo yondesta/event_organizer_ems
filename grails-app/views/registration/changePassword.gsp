@@ -1,9 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
+<%--
+  Created by IntelliJ IDEA.
+  User: nicosalvato
+  Date: 2016-06-11
+  Time: 23:37
+--%>
 
+<%@ page contentType="text/html;charset=UTF-8" %>
+<html>
 <head>
     <meta name="layout" content="ems">
-    <title>Login</title>
+    <title>Change Password</title>
 </head>
 <body>
 <div class="container">
@@ -14,13 +20,16 @@
                     <h3 class="panel-title">Please Sign In</h3>
                 </div>
                 <div class="panel-body">
-                    <form action='${postUrl}' method='POST' id='loginForm' class='cssform' autocomplete='off'>
+                    <form action='${createLink(controller: 'registration', action: 'updatePassword')}' method='POST' id='loginForm' class='cssform' autocomplete='off'>
                         <fieldset>
                             <div class="form-group">
-                                <input type='text' class='text_ form-control' placeholder="username" name='j_username' id='username'/>
+                                <input type='text' class='form-control' placeholder="Old Password" name='oldPassword' id='oldPassword'/>
                             </div>
                             <div class="form-group">
-                                <input type='password' class='text_ form-control' placeholder="password" name='j_password' id='password'/>
+                                <input type='password' class='form-control' placeholder="New Password" name='newPassword' id='newPassword'/>
+                            </div>
+                            <div class="form-group">
+                                <input type='password' class='form-control' placeholder="Confirm New Password" name='confirmNewPassword' id='confirmNewPassword'/>
                             </div>
                             <div class="checkbox">
                                 <label>
@@ -30,6 +39,7 @@
                             <!-- Change this to a button or input when using this as a form -->
                             <input class="btn btn-primary" type='submit' id="submit" value='Login'/>
                         </fieldset>
+                        <g:hiddenField name="user.id" value="${user.id}"/>
                     </form>
                 </div>
             </div>
@@ -37,5 +47,4 @@
     </div>
 </div>
 </body>
-
 </html>
