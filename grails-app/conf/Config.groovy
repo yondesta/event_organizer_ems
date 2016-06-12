@@ -128,6 +128,7 @@ grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'et.participant
 grails.plugin.springsecurity.authority.className = 'et.participant.Role'
 grails.plugin.springsecurity.logout.postOnly=false
 grails.plugin.springsecurity.successHandler.defaultTargetUrl = '/home'
+grails.plugin.springsecurity.logout.afterLogoutUrl = '/home'
 grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 	'/':                        ['permitAll'],
 	'/index':                   ['permitAll'],
@@ -146,6 +147,7 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 	'/aboutus':					['permitAll'],
 	'/aboutus.gsp':				['permitAll'],
 	'/notification/**':			['isFullyAuthenticated()'],
-	'/registration/**':			['permitAll']
+	'/registration/**':			['permitAll'],
+	'/home':		        	['permitAll']
 ]
 

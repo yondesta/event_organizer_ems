@@ -8,8 +8,8 @@ class UrlMappings {
         }
 
         "/"(controller: 'event', action: 'index')
-        "/aboutus"(view:'/aboutus')
         "/home"(controller: 'user', action: 'home')
+        "/aboutus"(view:'/aboutus')
         "500"(view:'/error')
 		}
 }

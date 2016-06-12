@@ -22,6 +22,14 @@ class EventController {
         [events: events, eventInstanceCount: Event.count()]
     }
 
+    def list(Integer max) {
+        params.max = Math.min(max ?: 12, 100)
+        params.sort = 'startDate'
+        params.order = 'asc'
+        def events = Event.findAllByStartDateGreaterThan(new Date(), params)
+        render view: 'index', model: [events: events, eventInstanceCount: Event.count()]
+    }
+
     def show(Event eventInstance) {
         boolean isRegistrationOpen = eventService.isRegistrationOpen(springSecurityService.currentUser, eventInstance)
         boolean isEventOwner = eventService.isEventOwner(springSecurityService.currentUser, eventInstance)

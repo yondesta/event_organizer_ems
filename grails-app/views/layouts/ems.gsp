@@ -185,7 +185,7 @@
                         </li>
                         <sec:ifNotLoggedIn>
                             <li>
-                                <a href="${createLink(uri: '/')}"><i class="fa fa-home fa-fw"></i> Home</a>
+                                <a class="active" href="${createLink(uri: '/')}"><i class="fa fa-home fa-fw"></i> Home</a>
                             </li>
                         </sec:ifNotLoggedIn>
                         <li>
@@ -197,12 +197,12 @@
                         <sec:ifLoggedIn>
                             <li>
                                 <a href="#"><i class="fa fa-user"></i> User Menu<span class="fa arrow"></span></a>
-                                <ul class="nav nav-second-level">
+                                <ul class="nav nav-second-level collapse">
                                     <li>
                                         <a href="${createLink(controller: 'user', action: 'home')}"> Home</a>
                                     </li>
                                     <li>
-                                        <a href="${createLink(controller: 'event', action: 'index')}"> Event List</a>
+                                        <a href="${createLink(controller: 'event', action: 'list')}"> Event List</a>
                                     </li>
                                 </ul>
                             </li>
@@ -210,7 +210,7 @@
                         <sec:ifAnyGranted roles="ROLE_ADMIN, ROLE_FACILITATOR">
                             <li>
                                 <a href="#"><i class="fa fa-user"></i> Participants<span class="fa arrow"></span></a>
-                                <ul class="nav nav-second-level">
+                                <ul class="nav nav-second-level collapse">
                                     <li>
                                         <a href="${createLink(controller: 'admin', action: 'registerParticipant')}">Register</a>
                                     </li>
@@ -220,7 +220,7 @@
                         <sec:ifAllGranted roles="ROLE_EVENT_OWNER">
                             <li>
                                 <a href="#"><i class="fa fa-calendar"></i> Events<span class="fa arrow"></span></a>
-                                <ul class="nav nav-second-level">
+                                <ul class="nav nav-second-level collapse">
                                     <li>
                                         <a href="${createLink(controller: 'event', action: 'create')}">Add New Event</a>
                                     </li>
@@ -230,7 +230,7 @@
                         <sec:ifAllGranted roles="ROLE_RESOURCE_OWNER">
                             <li>
                                 <a href="#"><i class="fa fa-money"></i> Resources<span class="fa arrow"></span></a>
-                                <ul class="nav nav-second-level">
+                                <ul class="nav nav-second-level collapse">
                                     <li>
                                         <a href="${createLink(controller: 'venue', action: 'create')}">Add Venue</a>
                                     </li>
