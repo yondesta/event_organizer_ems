@@ -116,6 +116,12 @@ class EventController {
 
     def registerUser(Event eventInstance) {
         def user = springSecurityService.getCurrentUser()
+        if (!user) {
+            // User sign up process is triggered
+            log.info "Unregistered user tried to join event ${eventInstance.title}"
+            redirect controller: 'registration', action: 'create', params: [eventInstanceId: eventInstance.id]
+            return
+        }
         if (UserEvent.findByParticipant(user)?.event == eventInstance) {
             flash.message = "You are already registered to the event."
             flash.messageType = 'alert-warning'

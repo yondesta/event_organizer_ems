@@ -88,7 +88,7 @@ grails.hibernate.osiv.readonly = false
 environments {
     development {
         grails.logging.jul.usebridge = true
-        grails.serverURL = "http://192.168.1.26:8080/event_organizer_ems"
+        grails.serverURL = "http://localhost:8080/event_organizer_ems"
     }
     production {
         grails.logging.jul.usebridge = false

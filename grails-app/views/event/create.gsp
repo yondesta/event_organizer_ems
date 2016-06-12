@@ -26,7 +26,7 @@
 		<form action="${createLink(action: 'save')}" method="post" role="form">
 			<g:render template="form"/>
 			<fieldset class="buttons">
-				<g:submitButton name="create" class="btn btn-default" value="Save" />
+				<g:submitButton name="save" class="btn btn-default" value="Save" />
 			</fieldset>
 		</form>
 	</body>

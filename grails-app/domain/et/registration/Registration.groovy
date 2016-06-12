@@ -1,5 +1,6 @@
 package et.registration
 
+import et.event.Event
 import et.participant.User
 
 class Registration {
@@ -8,7 +9,9 @@ class Registration {
     String token
     boolean expired = false
     User user
+    Event event
 
     static constraints = {
+        event nullable: true
     }
 }

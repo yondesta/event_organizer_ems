@@ -23,7 +23,7 @@
                     <form action='${createLink(controller: 'registration', action: 'updatePassword')}' method='POST' id='loginForm' class='cssform' autocomplete='off'>
                         <fieldset>
                             <div class="form-group">
-                                <input type='text' class='form-control' placeholder="Old Password" name='oldPassword' id='oldPassword'/>
+                                <input type='password' class='form-control' placeholder="Old Password" name='oldPassword' id='oldPassword'/>
                             </div>
                             <div class="form-group">
                                 <input type='password' class='form-control' placeholder="New Password" name='newPassword' id='newPassword'/>
@@ -40,6 +40,7 @@
                             <input class="btn btn-primary" type='submit' id="submit" value='Login'/>
                         </fieldset>
                         <g:hiddenField name="user.id" value="${user.id}"/>
+                        <g:hiddenField name="event.id" value="${event.id}"/>
                     </form>
                 </div>
             </div>

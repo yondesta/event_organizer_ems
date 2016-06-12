@@ -20,7 +20,7 @@ class AdminController {
     }
 
     @Transactional
-    def saveRegistration(params) {
+    def saveRegistration() {
         def event = Event.get(params.eventId as long)
         def sendEmail = Boolean.parseBoolean(params.sendEmail)
         def participant = new User(params.user)
