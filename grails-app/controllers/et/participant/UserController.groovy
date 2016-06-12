@@ -28,7 +28,7 @@ class UserController {
                     [userInstance: userInstance, date: new Date()]
             )
         } else {
-            redirect uri: '/'
+            redirect controller: 'event', action: 'index'
             return
         }
         log.info "User ${userInstance} with roles ${userInstance.getAuthorities()?.authority?.join(', ')} logged in..."

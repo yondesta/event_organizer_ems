@@ -55,7 +55,7 @@ class RegistrationController {
             log.info "...no registration token found."
             flash.message = "Invalid registration token. Please contact the system administrator"
             flash.messageType = 'alert-warning'
-            redirect uri: '/'
+            redirect uri: '/home'
             return
         }
         if (new Date().time - registration.dateCreated.time > grailsApplication.config.registration.expired.ms) {
@@ -64,14 +64,14 @@ class RegistrationController {
             registration.save(flush: true, failOnError: true)
             flash.message = "Registration token has expired. Please contact the system administrator"
             flash.messageType = 'alert-warning'
-            redirect uri: '/'
+            redirect uri: '/home'
             return
         }
         if (registration.expired) {
             log.info "...registration expired."
             flash.message = "Registration token has expired. Please contact the system administrator"
             flash.messageType = 'alert-warning'
-            redirect uri: '/'
+            redirect uri: '/home'
             return
         }
         registration.expired = true

@@ -16,10 +16,7 @@
             <tr>
                 <td>${event.title}</td>
                 <td class="text-center">
-                    %{--<ems:eventButton eventId="${event.id}"/>--}%
-                    <button class="btn ${event.category.buttonClass} btn-circle" type="button">
-                        <i class="fa ${event.category.icon}"></i>
-                    </button>
+                    <ems:categoryButton eventId="${event.id}"/>
                 </td>
                 <td class="text-center">${event.startDate.format('dd/MM/yyyy')}</td>
                 <td class="text-center">${event.endDate.format('dd/MM/yyyy')}</td>

@@ -4,13 +4,16 @@ import et.event.Event
 
 class EmsTagLib {
     static namespace = "ems"
-    static defaultEncodeAs = [taglib:'html']
+    static defaultEncodeAs = 'raw'
     //static encodeAsForTags = [tagName: [taglib:'html'], otherTagName: [taglib:'none']]
 
-    def eventButton = { attrs ->
+    /**
+     * Displays the button that represents the category of the event.
+     *
+     * @attr eventId REQUIRED the event ID.
+     */
+    def categoryButton = { attrs ->
         def event = Event.load(attrs.eventId as long)
-        out << "<button class=\"btn ${event.category.buttonClass} btn-circle ${attrs.size ?: ''}\" type=\"button\">" +
-                        "<i class=\"fa ${event.category.icon} ${attrs.iconSize ?: ''}\"></i>" +
-                    "</button>"
+        out << render(template: '/event/categoryButton', model: [event: event])
     }
 }
