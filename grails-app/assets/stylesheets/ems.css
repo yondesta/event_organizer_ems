@@ -3,4 +3,6 @@
 *= require ems/metisMenu
 *= require ems/sb-admin-2
 *= require ems/font-awesome
+*= require datatables-integration/dataTables.bootstrap.css
+*= require datatables-responsive/responsive.dataTables.css
 */

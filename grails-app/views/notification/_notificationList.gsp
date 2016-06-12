@@ -3,7 +3,7 @@
     <g:each in="${notifications}" var="notification" status="idx">
         <li class="left clearfix">
             <span class="chat-img pull-left">
-                <button class="btn ${notification.event.category.buttonClass} btn-circle btn-sm" type="button">
+                <button class="btn ${notification.event.category.buttonClass} btn-circle" type="button">
                     <i class="fa ${notification.event.category.icon}"></i>
                 </button>
             </span>
