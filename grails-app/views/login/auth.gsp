@@ -28,14 +28,39 @@
                                 </label>
                             </div>
                             <!-- Change this to a button or input when using this as a form -->
-                            <input class="btn btn-primary" type='submit' id="submit" value='Login'/>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <input class="btn btn-primary" type='submit' id="submit" value='Login'/>
+                                </div>
+                                <div class=" col-lg-6 text-right">
+                                    <a id="retrieve-password" href="#">Forgot my password</a>
+                                </div>
+                            </div>
                         </fieldset>
+                    </form>
+                    <form method="post" id="reset-password-form" action="${createLink(controller: 'user', action: 'resetPassword')}" class="hidden">
+                        <g:hiddenField id="reset-password-username" name="username" value=""/>
                     </form>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<script>
+    $('#retrieve-password').click(function() {
+        retrievePassword();
+    });
+    var retrievePassword = function() {
+        var username = $('#username').val();
+        if (!username) {
+            alert('Please insert a valid username');
+        }
+        else {
+            $('#reset-password-username').val(username);
+            $('#reset-password-form').submit();
+        }
+    };
+</script>
 </body>
 
 </html>

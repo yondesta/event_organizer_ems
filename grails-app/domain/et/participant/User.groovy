@@ -69,7 +69,7 @@ class User implements Serializable {
 		lastName blank: false
 		email blank: false, email: true
 		phone nullable: true, blank: true, validator: { val, obj ->
-			if(val && val != '' && val !=~ /^\+(?:[0-9] ?){6,14}[0-9]$/) return ['invalid.format']
+			if(val && val != '' && !(val ==~ /^\+(?:[0-9] ?){6,14}[0-9]$/)) return ['invalid.format']
 		}
 		address nullable: true
 		birthDate nullable: true

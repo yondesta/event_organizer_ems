@@ -42,3 +42,24 @@
         <div id="panel-body" class="panel-body"></div>
     </div>
 </div>
+<script type="text/javascript">
+    var loadNotifications = function() {
+        $.ajax({
+            url: "${createLink(controller: 'notification', action: 'renderNotifications')}",
+            type: 'POST',
+            dataType: 'html',
+            data: {
+                userId: "${userInstance.id}"
+            }
+        }).success(function(data) {
+            $('#panel-body').html(data);
+        }).error(function() {
+//            alert('Could not load notification.');
+        });
+    };
+    loadNotifications();
+
+    $('#refresh').click(function() {
+        loadNotifications();
+    })
+</script>

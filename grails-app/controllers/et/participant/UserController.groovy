@@ -1,6 +1,7 @@
 package et.participant
 
 import et.event.Event
+import et.registration.Registration
 import grails.plugin.springsecurity.SpringSecurityUtils
 import grails.transaction.Transactional
 
@@ -10,6 +11,7 @@ import static org.springframework.http.HttpStatus.*
 class UserController {
 
     def springSecurityService
+    def registrationService
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
@@ -125,5 +127,22 @@ class UserController {
             }
             '*'{ render status: NOT_FOUND }
         }
+    }
+
+    @Transactional
+    def resetPassword() {
+        def username = params.username
+        def user = User.findByUsername(username)
+        def newPassword = registrationService.generatePassword()
+        user.password = newPassword
+        user.save(flush: true, failOnError: true)
+        String token = registrationService.generateToken()
+        new Registration(
+                token: token,
+                user: user
+        ).save(flush: true, failOnError: true)
+        log.info "Sending email to $user.email with password $newPassword and url: ${grailsApplication.config.grails.serverURL}/registration/confirmRegistration?token=${token}"
+        flash.message = "An email will be sent to $user.email, follow the link to reset password."
+        redirect controller: 'event', action: 'index'
     }
 }

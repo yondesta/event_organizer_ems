@@ -71,7 +71,8 @@ class RegistrationController {
         registration.delete(flush: true)
         user.confirmed = true
         user.save(flush: true, failOnError: true)
-        UserRole.create registration.user, Role.findByAuthority('ROLE_USER'), true
+        if (!UserRole.findByUser(user))
+            UserRole.create registration.user, Role.findByAuthority('ROLE_USER'), true
         flash.message = "Registration successfull! Welcome to EMS Event Organizer."
         flash.messageType = 'alert-success'
         log.info "...redirecting to change password."
@@ -87,7 +88,7 @@ class RegistrationController {
                 springSecurityService.reauthenticate(cmd.user.username, User.load(cmd.user.id).password)
                 if (cmd.event)
                     UserEvent.create cmd.user, cmd.event, true
-                flash.message = "Welcome $cmd.user, you successfully signed up to EMS!"
+                flash.message = "Welcome $cmd.user!"
                 redirect controller: 'user', action: 'home'
                 return
             }
