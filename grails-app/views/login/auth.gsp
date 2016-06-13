@@ -14,6 +14,9 @@
                     <h3 class="panel-title">Please Sign In</h3>
                 </div>
                 <div class="panel-body">
+                    <g:if test='${flash.message}'>
+                        <div class='alert alert-warning'>${flash.message}</div>
+                    </g:if>
                     <form action='${postUrl}' method='POST' id='loginForm' class='cssform' autocomplete='off'>
                         <fieldset>
                             <div class="form-group">
@@ -47,6 +50,9 @@
     </div>
 </div>
 <script>
+    (function() {
+        document.forms['loginForm'].elements['j_username'].focus();
+    })();
     $('#retrieve-password').click(function() {
         retrievePassword();
     });
