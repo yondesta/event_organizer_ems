@@ -41,6 +41,7 @@
         $('.form-control').val('');
         $('select[name^="user.birthDate"]').val('');
         $('input[type="radio"]').prop('checked', false);
+        $('input[type="checkbox"]').prop('checked', false);
     };
 </script>
 </body>

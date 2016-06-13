@@ -30,9 +30,18 @@
 					<g:render template="form"/>
 				</fieldset>
 				<fieldset class="buttons">
-					<g:submitButton name="create" class="save" value="${message(code: 'default.button.create.label', default: 'Create')}" />
+					<g:submitButton name="create" class="btn btn-primary" value="${message(code: 'default.button.create.label', default: 'Create')}" />
+					<button type="button" onclick="clearFields()" name="clear" class="btn btn-default">Clear</button>
 				</fieldset>
 			</g:form>
 		</div>
+		<script>
+			var clearFields = function() {
+				$('.form-control').val('');
+				$('input[type="checkbox"]').prop('checked', false);
+				$('input[type="radio"]').prop('checked', false);
+				$('select[name^="user.birthDate"]').val('');
+			};
+		</script>
 	</body>
 </html>

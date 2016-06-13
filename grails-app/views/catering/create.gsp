@@ -26,9 +26,17 @@
 			<g:form url="[resource:cateringInstance, action:'save']" role="form" >
 				<g:render template="form"/>
 					<fieldset class="buttons">
-					<g:submitButton name="create" class="btn btn-default" value="Save" />
-				</fieldset>
+						<g:submitButton name="create" class="btn btn-primary" value="Save" />
+						<button type="button" onclick="clearFields()" name="clear" class="btn btn-default">Clear</button>
+					</fieldset>
 			</g:form>
 		</div>
+		<script>
+			var clearFields = function() {
+				$('.form-control').val('');
+				$('input[type="checkbox"]').prop('checked', false);
+				$('input[type="radio"]').prop('checked', false);
+			};
+		</script>
 	</body>
 </html>

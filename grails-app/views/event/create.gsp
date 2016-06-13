@@ -26,8 +26,16 @@
 		<form action="${createLink(action: 'save')}" method="post" role="form">
 			<g:render template="form"/>
 			<fieldset class="buttons">
-				<g:submitButton name="save" class="btn btn-default" value="Save" />
+				<g:submitButton name="save" class="btn btn-primary" value="Save" />
+				<button type="button" onclick="clearFields()" name="clear" class="btn btn-default">Clear</button>
 			</fieldset>
 		</form>
+		<script>
+			var clearFields = function() {
+				$('.form-control').val('');
+				$('input[type="checkbox"]').prop('checked', false);
+				$('input[type="radio"]').prop('checked', false);
+			};
+		</script>
 	</body>
 </html>
