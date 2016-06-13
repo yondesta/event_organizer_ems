@@ -21,7 +21,9 @@ class AdminController {
 
     @Transactional
     def saveRegistration() {
-        def event = Event.get(params.eventId as long)
+        Event event
+        if (params.eventId)
+            event = Event.get(params.eventId as long)
         def sendEmail = Boolean.parseBoolean(params.sendEmail)
         def participant = new User(params.user)
         participant.password = registrationService.generatePassword()
@@ -38,10 +40,12 @@ class AdminController {
         }
         participant.save(flush: true, failOnError: true)
         log.info "User ${participant.username} created."
-        UserRole.create participant, Role.findByAuthority('ROLE_USER'), true
-        event.save(flush: true, failOnError: true)
+        UserRole.create participant, Role.load(params.roleId as long) ?: Role.findByAuthority('ROLE_USER'), true
         participant.save(flush: true, failOnError: true)
-        UserEvent.create participant, event, true
+        if (event) {
+            event.save(flush: true, failOnError: true)
+            UserEvent.create participant, event, true
+        }
         String token = registrationService.generateToken()
         new Registration(
                 token: token,

@@ -87,11 +87,8 @@
 <div class="row">
     <div class="col-lg-4">
         <div class="form-group">
-            <label class="control-label" for="eventId">
-                Event
-                <span class="required-indicator">*</span>
-            </label>
-            <g:select class="form-control" name="eventId" from="${availableEvents}"  optionKey="id" optionValue="title" value="${eventInstance}"/>
+            <label class="control-label" for="eventId">Event</label>
+            <g:select class="form-control" name="eventId" from="${availableEvents}"  optionKey="id" optionValue="title" value="${eventInstance}" noSelection="['': '']"/>
         </div>
     </div>
     <div class="col-lg-4">
@@ -99,7 +96,7 @@
             <label>
                 Select Role
             </label>
-            <g:select class="form-control" name="eventId" from="${Role.list()}" optionKey="id" optionValue="authority" value="${Role.findByAuthority('ROLE_USER').id}"/>
+            <g:select class="form-control" name="roleId" from="${Role.list()}" optionKey="id" optionValue="authority" value="${Role.findByAuthority('ROLE_USER').id}"/>
         </div>
     </div>
 </div>

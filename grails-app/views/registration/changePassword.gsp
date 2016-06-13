@@ -40,7 +40,7 @@
                             <input class="btn btn-primary" type='submit' id="submit" value='Login'/>
                         </fieldset>
                         <g:hiddenField name="user.id" value="${user.id}"/>
-                        <g:hiddenField name="event.id" value="${event.id}"/>
+                        <g:hiddenField name="event.id" value="${event?.id}"/>
                     </form>
                 </div>
             </div>
