@@ -16,7 +16,7 @@
             <g:textField class="form-control" name="user.firstName" required="" value="${userInstance?.firstName}"/>
         </div>
         <div class="form-group ${hasErrors(bean: userInstance, field: 'email', 'has-error')}">
-            <label class="control-label" for="user.password">
+            <label class="control-label" for="user.email">
                 Email
                 <span class="required-indicator">*</span>
             </label>
@@ -27,19 +27,12 @@
                 Birth Date
                 <span class="required-indicator">*</span>
             </label>
-            <g:datePicker class="form-control" name="user.birthDate" precision="day"  value="${userInstance?.birthDate}" default="none" noSelection="['': '']" />
+            <g:datePicker years="${(1930..2016)}" name="user.birthDate" precision="day"  value="${userInstance?.birthDate}" default="none" noSelection="['': '']" />
         </div>
     </div>
     <div class="col-lg-4">
-        %{--<div class="form-group ${hasErrors(bean: userInstance, field: 'password', 'has-error')}">--}%
-            %{--<label class="control-label" for="user.password">--}%
-                %{--Password--}%
-                %{--<span class="required-indicator">*</span>--}%
-            %{--</label>--}%
-            %{--<g:passwordField class="form-control" name="user.password" datatype="password" required="" value="${userInstance?.password}"/>--}%
-        %{--</div>--}%
         <div class="form-group ${hasErrors(bean: userInstance, field: 'lastName', 'has-error')}">
-            <label class="control-label" for="user.password">
+            <label class="control-label" for="user.lastName">
                 Last Name
                 <span class="required-indicator">*</span>
             </label>
@@ -54,13 +47,6 @@
         </div>
     </div>
     <div class="col-lg-4">
-        %{--<div class="form-group ${hasErrors(bean: userInstance, field: 'confirmPassword', 'has-error')}">--}%
-            %{--<label class="control-label" for="confirmPassword">--}%
-                %{--Confirm Password--}%
-                %{--<span class="required-indicator">*</span>--}%
-            %{--</label>--}%
-            %{--<g:passwordField class="form-control" name="confirmPassword" datatype="password" required="" value=""/>--}%
-        %{--</div>--}%
         <div class="form-group ${hasErrors(bean: userInstance, field: 'gender', 'has-error')}">
             <label class="control-label">
                 Gender
@@ -95,6 +81,7 @@
         <div class="form-group">
             <label>
                 Select Role
+                <span class="required-indicator">*</span>
             </label>
             <g:select class="form-control" name="roleId" from="${Role.list()}" optionKey="id" optionValue="authority" value="${Role.findByAuthority('ROLE_USER').id}"/>
         </div>

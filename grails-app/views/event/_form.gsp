@@ -45,7 +45,7 @@
 	</div>
 	<div class="col-lg-4">
 		<div class="form-group ${hasErrors(bean: eventInstance, field: 'owner', 'has-error')}">
-			<label class="control-label" for="catering">Owner
+			<label class="control-label" for="owner">Owner
 				<span class="required-indicator">*</span>
 			</label>
 			<g:select id="owner" name="owner.id" from="${owners}" optionKey="id"

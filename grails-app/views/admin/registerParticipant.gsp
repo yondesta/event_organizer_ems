@@ -25,7 +25,8 @@
 <form action="${createLink(action: 'saveRegistration')}" role="form">
     <g:render template="registrationForm"/>
     <fieldset class="buttons">
-        <g:submitButton name="saveRegistration" class="btn btn-default" value="Register"/>
+        <g:submitButton name="saveRegistration" class="btn btn-primary" value="Register"/>
+        <button type="button" onclick="clearFields()" name="clear" class="btn btn-default">Clear</button>
     </fieldset>
 </form>
 <script type="application/javascript">
@@ -35,6 +36,12 @@
         else
            $('#sendEmail').val('false');
     });
+
+    var clearFields = function() {
+        $('.form-control').val('');
+        $('select[name^="user.birthDate"]').val('');
+        $('input[type="radio"]').prop('checked', false);
+    };
 </script>
 </body>
 </html>
