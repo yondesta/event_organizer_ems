@@ -1,22 +1,20 @@
+<%@ page import="org.springframework.validation.FieldError" %>
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta name="layout" content="main">
-		<g:set var="entityName" value="${message(code: 'catering.label', default: 'Catering')}" />
-		<title><g:message code="default.create.label" args="[entityName]" /></title>
+		<meta name="layout" content="ems">
+		<title>Add Catering></title>
 	</head>
 	<body>
-		<a href="#create-catering" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
-		<div class="nav" role="navigation">
-			<ul>
-				<li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
-				<li><g:link class="list" action="index"><g:message code="default.list.label" args="[entityName]" /></g:link></li>
-			</ul>
+		<div class="row">
+			<div class="col-lg-12">	
+			<h1 class="page-header">Add Catering</h1>
+			</div>
 		</div>
-		<div id="create-catering" class="content scaffold-create" role="main">
-			<h1><g:message code="default.create.label" args="[entityName]" /></h1>
 			<g:if test="${flash.message}">
-			<div class="message" role="status">${flash.message}</div>
+			<div class="alert ${flash.messageType ?: 'alert-info'} alert-dismissable" role="status">${flash.message}
+				<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+			</div>
 			</g:if>
 			<g:hasErrors bean="${cateringInstance}">
 			<ul class="errors" role="alert">
@@ -25,12 +23,10 @@
 				</g:eachError>
 			</ul>
 			</g:hasErrors>
-			<g:form url="[resource:cateringInstance, action:'save']" >
-				<fieldset class="form">
-					<g:render template="form"/>
-				</fieldset>
-				<fieldset class="buttons">
-					<g:submitButton name="create" class="save" value="${message(code: 'default.button.create.label', default: 'Create')}" />
+			<g:form url="[resource:cateringInstance, action:'save']" role="form" >
+				<g:render template="form"/>
+					<fieldset class="buttons">
+					<g:submitButton name="create" class="btn btn-default" value="Save" />
 				</fieldset>
 			</g:form>
 		</div>

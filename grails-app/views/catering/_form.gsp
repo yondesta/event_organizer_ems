@@ -1,13 +1,12 @@
 <%@ page import="et.resources.Catering" %>
 
 
-
-<div class="fieldcontain ${hasErrors(bean: cateringInstance, field: 'email', 'error')} ">
-	<label for="email">
-		<g:message code="catering.email.label" default="Email" />
-		
+<div class="fieldcontain ${hasErrors(bean: cateringInstance, field: 'name', 'error')} required">
+	<label for="name">
+		<g:message code="catering.name.label" default="Name" />
+		<span class="required-indicator">*</span>
 	</label>
-	<g:field type="email" name="email" value="${cateringInstance?.email}"/>
+	<g:textField name="name" required="" value="${cateringInstance?.name}"/>
 
 </div>
 
@@ -20,24 +19,6 @@
 
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: cateringInstance, field: 'lunchPrice', 'error')} required">
-	<label for="lunchPrice">
-		<g:message code="catering.lunchPrice.label" default="Lunch Price" />
-		<span class="required-indicator">*</span>
-	</label>
-	<g:field name="lunchPrice" value="${fieldValue(bean: cateringInstance, field: 'lunchPrice')}" required=""/>
-
-</div>
-
-<div class="fieldcontain ${hasErrors(bean: cateringInstance, field: 'name', 'error')} required">
-	<label for="name">
-		<g:message code="catering.name.label" default="Name" />
-		<span class="required-indicator">*</span>
-	</label>
-	<g:textField name="name" required="" value="${cateringInstance?.name}"/>
-
-</div>
-
 <div class="fieldcontain ${hasErrors(bean: cateringInstance, field: 'phone', 'error')} required">
 	<label for="phone">
 		<g:message code="catering.phone.label" default="Phone" />
@@ -47,12 +28,12 @@
 
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: cateringInstance, field: 'snackPrice', 'error')} required">
-	<label for="snackPrice">
-		<g:message code="catering.snackPrice.label" default="Snack Price" />
-		<span class="required-indicator">*</span>
+<div class="fieldcontain ${hasErrors(bean: cateringInstance, field: 'email', 'error')} ">
+	<label for="email">
+		<g:message code="catering.email.label" default="Email" />
+		
 	</label>
-	<g:field name="snackPrice" value="${fieldValue(bean: cateringInstance, field: 'snackPrice')}" required=""/>
+	<g:field type="email" name="email" value="${cateringInstance?.email}"/>
 
 </div>
 
@@ -65,3 +46,20 @@
 
 </div>
 
+<div class="fieldcontain ${hasErrors(bean: cateringInstance, field: 'lunchPrice', 'error')} required">
+	<label for="lunchPrice">
+		<g:message code="catering.lunchPrice.label" default="Lunch Price" />
+		<span class="required-indicator">*</span>
+	</label>
+	<g:field name="lunchPrice" value="${fieldValue(bean: cateringInstance, field: 'lunchPrice')}" required=""/>
+
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: cateringInstance, field: 'snackPrice', 'error')} required">
+	<label for="snackPrice">
+		<g:message code="catering.snackPrice.label" default="Snack Price" />
+		<span class="required-indicator">*</span>
+	</label>
+	<g:field name="snackPrice" value="${fieldValue(bean: cateringInstance, field: 'snackPrice')}" required=""/>
+
+</div>
