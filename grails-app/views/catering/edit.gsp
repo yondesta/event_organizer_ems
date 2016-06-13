@@ -1,10 +1,10 @@
-<%@ page import="et.resources.Catering" %>
+<%@ page import="org.springframework.validation.FieldError; et.resources.Catering" %>
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta name="layout" content="main">
+		<meta name="layout" content="ems">
 		<g:set var="entityName" value="${message(code: 'catering.label', default: 'Catering')}" />
-		<title><g:message code="default.edit.label" args="[entityName]" /></title>
+		<title>Edit Catering</title>
 	</head>
 	<body>
 		<a href="#edit-catering" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
