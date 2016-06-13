@@ -24,7 +24,8 @@ class EventController {
 
     def show(Event eventInstance) {
         boolean isRegistrationOpen = eventService.isRegistrationOpen(springSecurityService.currentUser, eventInstance)
-        [eventInstance: eventInstance, isRegistrationOpen: isRegistrationOpen]
+        boolean isEventOwner = eventService.isEventOwner(springSecurityService.currentUser, eventInstance)
+        [eventInstance: eventInstance, isRegistrationOpen: isRegistrationOpen, isEventOwner: isEventOwner]
     }
 
     def create() {

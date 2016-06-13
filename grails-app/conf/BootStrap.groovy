@@ -59,7 +59,7 @@ class BootStrap {
 		}
 
 		def locations = ["Wolisso", "Addis Ababa", "Arba Minch"]
-		def eventOwners = [david, cleethus]
+		def eventOwners = [admin, yonas]
 		def categories = []
 		def icons = ['fa-tag', 'fa-h-square', 'fa-cutlery', 'fa-lightbulb-o', 'fa-dollar']
 		def panelClassList = ['panel-primary', 'panel-green', 'panel-yellow', 'panel-red', 'panel-default']

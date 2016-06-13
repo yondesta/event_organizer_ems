@@ -1,11 +1,10 @@
 package et.participant
 
 import et.event.Event
-import et.event.UserEvent
 import grails.plugin.springsecurity.SpringSecurityUtils
+import grails.transaction.Transactional
 
 import static org.springframework.http.HttpStatus.*
-import grails.transaction.Transactional
 
 @Transactional(readOnly = true)
 class UserController {
@@ -15,36 +14,26 @@ class UserController {
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     def home() {
-        if (SpringSecurityUtils.ifAllGranted('ROLE_ADMIN')) {
-            println 'Admin home page...'
-            render view: 'index'
-            //redirect controller: '...', action: '...'
-            return
+        User userInstance = springSecurityService.currentUser
+        def userEvents
+        if (SpringSecurityUtils.ifAnyGranted('ROLE_ADMIN, ROLE_FACILITATOR')) {
+            userEvents = Event.list([sort: 'startDate', order: 'asc'])
+        } else if (SpringSecurityUtils.ifAllGranted('ROLE_EVENT_OWNER')) {
+            log.info 'Event owner logged in...'
+            userEvents = Event.findAllByOwnerAndStartDateGreaterThan(userInstance, new Date())
         } else if (SpringSecurityUtils.ifAllGranted('ROLE_USER')) {
             log.info 'User logged in...'
-            redirect controller: 'user', action: 'userHome'
-            return
-        } else if (SpringSecurityUtils.ifAllGranted('ROLE_FACILITATOR')) {
-            println 'Facilitator home page...'
-            render view: 'index'
-            //redirect controller: '...', action: '...'
-            return
+            userEvents = Event.executeQuery(
+                    """select e from UserEvent ue inner join ue.event e
+                where ue.participant = :userInstance and
+                e.endDate >= :date order by e.startDate asc""",
+                    [userInstance: userInstance, date: new Date()]
+            )
         } else {
             redirect uri: '/'
+            return
         }
-    }
-
-    def userHome() {
-        def userInstance = springSecurityService.currentUser
-        def userEvents = Event.executeQuery("""select e from UserEvent ue inner join ue.event e
-where ue.participant = :userInstance and
-e.endDate >= :date order by e.startDate asc""",
-                [userInstance: userInstance, date: new Date()])
-        def eventsNotifications = []
-        userEvents.each { event ->
-            eventsNotifications << event.notifications
-        }
-        [userInstance : userInstance, userEvents: userEvents, eventsNotifications: eventsNotifications.flatten()]
+        [userInstance : userInstance, userEvents: userEvents]
     }
 
     def index(Integer max) {
