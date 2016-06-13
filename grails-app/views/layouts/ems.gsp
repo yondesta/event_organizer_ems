@@ -199,10 +199,15 @@
                                 <a href="#"><i class="fa fa-user"></i> User Menu<span class="fa arrow"></span></a>
                                 <ul class="nav nav-second-level collapse">
                                     <li>
-                                        <a href="${createLink(controller: 'user', action: 'home')}"> Home</a>
+                                        <a href="${createLink(controller: 'user', action: 'home')}"><i class="fa fa-home fa-fw"></i> Home</a>
                                     </li>
+                                    <sec:ifAnyGranted roles="ROLE_ADMIN, ROLE_FACILITATOR">
                                     <li>
-                                        <a href="${createLink(controller: 'event', action: 'list')}"> Event List</a>
+                                        <a href="${createLink(controller: 'user', action: 'index')}"><i class="fa fa-users fa-fw"></i> User List</a>
+                                    </li>
+                                    </sec:ifAnyGranted>
+                                    <li>
+                                        <a href="${createLink(controller: 'event', action: 'list')}"><i class="fa fa-list fa-fw"></i> Event List</a>
                                     </li>
                                 </ul>
                             </li>

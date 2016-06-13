@@ -15,30 +15,12 @@
     </div>
 </g:if>
 <div class="row">
-    <div class="col-lg-8">
-        <sec:ifAnyGranted roles="ROLE_ADMIN, ROLE_FACILITATOR">
-            <g:render template="eventTable"/>
-        </sec:ifAnyGranted>
-        <sec:ifNotGranted roles="ROLE_ADMIN, ROLE_FACILITATOR">
-            <g:render template="eventTiles"/>
-        </sec:ifNotGranted>
-    </div>
-    <div class="col-lg-4">
-        <div class="chat-panel panel panel-default">
-            <div class="panel-heading">
-                <i class="fa fa-comments fa-fw"></i>
-                Events Updates
-                <div class="btn-group pull-right">
-                    <a id="refresh" href="#">
-                        <i class="fa fa-refresh fa-fw"></i>
-                    </a>
-                </div>
-            </div>
-            <!-- /.panel-heading -->
-            <div id="panel-body" class="panel-body"></div>
-            <!-- /.panel-body -->
-        </div>
-    </div>
+    <sec:ifAnyGranted roles="ROLE_ADMIN, ROLE_FACILITATOR">
+        <g:render template="eventTable"/>
+    </sec:ifAnyGranted>
+    <sec:ifNotGranted roles="ROLE_ADMIN, ROLE_FACILITATOR">
+        <g:render template="eventTiles"/>
+    </sec:ifNotGranted>
 </div>
 <script type="text/javascript">
     var loadNotifications = function() {

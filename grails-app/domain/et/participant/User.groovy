@@ -1,6 +1,5 @@
 package et.participant
 
-import et.event.Event
 import groovy.transform.EqualsAndHashCode
 import groovy.transform.ToString
 
@@ -22,6 +21,7 @@ class User implements Serializable {
 	Date birthDate
 	String gender
 	Integer age
+	boolean confirmed = false
 
 	boolean enabled = true
 	boolean accountExpired

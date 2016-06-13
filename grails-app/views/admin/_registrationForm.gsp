@@ -1,4 +1,4 @@
-<%@ page import="et.participant.User" %>
+<%@ page import="et.participant.Role; et.participant.User" %>
 <div class="row">
     <div class="col-lg-4">
         <div class="form-group ${hasErrors(bean: userInstance, field: 'username', 'has-error')}">
@@ -97,14 +97,9 @@
     <div class="col-lg-4">
         <div class="form-group">
             <label>
-                Send Email
+                Select Role
             </label>
-            <div class="checkbox">
-                <label>
-                    <g:checkBox id="sendEmailCheckbox" name="sendEmailCheckbox" value="${sendEmail ?: true}"/>
-                </label>
-            </div>
+            <g:select class="form-control" name="eventId" from="${Role.list()}" optionKey="id" optionValue="authority" value="${Role.findByAuthority('ROLE_USER').id}"/>
         </div>
-        <g:hiddenField id="sendEmail" name="sendEmail" value="${sendEmail ?: true}"/>
     </div>
 </div>

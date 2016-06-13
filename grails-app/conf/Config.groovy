@@ -120,7 +120,7 @@ log4j.main = {
 }
 
 //Registration
-registration.expired.ms = 1 * 60 * 1000
+registration.expired.ms = 0.5 * 60 * 1000
 
 // Added by the Spring Security Core plugin:
 grails.plugin.springsecurity.userLookup.userDomainClassName = 'et.participant.User'

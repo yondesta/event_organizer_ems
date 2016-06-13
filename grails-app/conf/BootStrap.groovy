@@ -54,7 +54,8 @@ class BootStrap {
 					firstName: firstName,
 					lastName: lastName,
 					email: "${firstName.toLowerCase()}@ems.et",
-					gender: gender
+					gender: gender,
+					birthDate: new Date(2000 - 1900 - it % 30, it % 12, it % 29)
 			).save(flush: true, failOnError: true)
 		}
 

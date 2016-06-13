@@ -33,7 +33,6 @@ class RegistrationController {
         }
         participant.save(flush: true, failOnError: true)
         log.info "User ${participant.username} created."
-        UserRole.create participant, Role.findByAuthority('ROLE_USER'), true
         event.save(flush: true, failOnError: true)
         participant.save(flush: true, failOnError: true)
         String token = registrationService.generateToken()
@@ -51,31 +50,28 @@ class RegistrationController {
     def confirmRegistration(String token) {
         log.trace "Confirming registration with token $token..."
         def registration = Registration.findByToken(token)
-        if (!registration) {
+        def user = registration.user
+        if (!registration) {  // If user has confirmed registration, registration war already deleted
             log.info "...no registration token found."
             flash.message = "Invalid registration token. Please contact the system administrator"
             flash.messageType = 'alert-warning'
-            redirect uri: '/home'
-            return
-        }
-        if (new Date().time - registration.dateCreated.time > grailsApplication.config.registration.expired.ms) {
-            log.info "...token expired."
-            registration.expired = true
-            registration.save(flush: true, failOnError: true)
-            flash.message = "Registration token has expired. Please contact the system administrator"
-            flash.messageType = 'alert-warning'
-            redirect uri: '/home'
+            redirect uri: '/'
             return
         }
         if (registration.expired) {
-            log.info "...registration expired."
+            log.info "...registration ${registration.id} expired."
+            registration.delete(flush: true)
+            if(!user.confirmed) // This control avoids deleting a user that re-clicks on his confirmation link after a successful registration
+                user.delete(flush: true)
             flash.message = "Registration token has expired. Please contact the system administrator"
             flash.messageType = 'alert-warning'
-            redirect uri: '/home'
+            redirect uri: '/'
             return
         }
-        registration.expired = true
-        registration.save(flush: true, failOnError: true)
+        registration.delete(flush: true)
+        user.confirmed = true
+        user.save(flush: true, failOnError: true)
+        UserRole.create registration.user, Role.findByAuthority('ROLE_USER'), true
         flash.message = "Registration successfull! Welcome to EMS Event Organizer."
         flash.messageType = 'alert-success'
         log.info "...redirecting to change password."

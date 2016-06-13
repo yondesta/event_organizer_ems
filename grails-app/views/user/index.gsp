@@ -1,66 +1,54 @@
 
-<%@ page import="et.participant.User" %>
+<%@ page import="et.event.UserEvent; et.participant.User" %>
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta name="layout" content="main">
-		<g:set var="entityName" value="${message(code: 'user.label', default: 'User')}" />
-		<title><g:message code="default.list.label" args="[entityName]" /></title>
+		<meta name="layout" content="ems">
+		<title>User List</title>
 	</head>
 	<body>
-		<a href="#list-user" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
-		<div class="nav" role="navigation">
-			<ul>
-				<li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
-				<li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>
-			</ul>
+	<div class="row">
+		<div class="col-lg-12">
+			<h1 class="page-header">User List</h1>
 		</div>
-		<div id="list-user" class="content scaffold-list" role="main">
-			<h1><g:message code="default.list.label" args="[entityName]" /></h1>
-			<g:if test="${flash.message}">
-				<div class="message" role="status">${flash.message}</div>
-			</g:if>
-			<table>
-			<thead>
+	</div>
+	<g:if test="${flash.message}">
+		<div class="alert ${flash.messageType ?: 'alert-info'} alert-dismissable" role="status">${flash.message}
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+		</div>
+	</g:if>
+	<div class="row">
+		<div class="col-lg-12">
+			<table class="table table-bordered" id="userTable">
+				<thead>
 					<tr>
-					
-						<g:sortableColumn property="username" title="${message(code: 'user.username.label', default: 'Username')}" />
-					
-						<g:sortableColumn property="password" title="${message(code: 'user.password.label', default: 'Password')}" />
-					
-						<g:sortableColumn property="firstName" title="${message(code: 'user.firstName.label', default: 'First Name')}" />
-					
-						<g:sortableColumn property="lastName" title="${message(code: 'user.lastName.label', default: 'Last Name')}" />
-					
-						<g:sortableColumn property="email" title="${message(code: 'user.email.label', default: 'Email')}" />
-					
-						<g:sortableColumn property="phone" title="${message(code: 'user.phone.label', default: 'Phone')}" />
-					
+						<th>First Name</th>
+						<th>Last Name</th>
+						<th>Age</th>
+						<th>Events</th>
+						<th>Roles</th>
+						<th>Locked</th>
+						<th>Active</th>
 					</tr>
 				</thead>
 				<tbody>
-				<g:each in="${userInstanceList}" status="i" var="userInstance">
-					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
-					
-						<td><g:link action="show" id="${userInstance.id}">${fieldValue(bean: userInstance, field: "username")}</g:link></td>
-					
-						<td>${fieldValue(bean: userInstance, field: "password")}</td>
-					
-						<td>${fieldValue(bean: userInstance, field: "firstName")}</td>
-					
-						<td>${fieldValue(bean: userInstance, field: "lastName")}</td>
-					
-						<td>${fieldValue(bean: userInstance, field: "email")}</td>
-					
-						<td>${fieldValue(bean: userInstance, field: "phone")}</td>
-					
-					</tr>
-				</g:each>
+					<g:each in="${User.list()}" var="user" status="idx">
+						<tr>
+							<td>${user.firstName.capitalize()}</td>
+							<td>${user.lastName.capitalize()}</td>
+							<td class="text-rigth">${user.age}</td>
+							<td>${UserEvent.countByParticipant(user)}</td>
+							<td>${user.getAuthorities().authority.join(', ')}</td>
+							<td class="text-center"><i class="fa ${user.accountLocked ? 'fa-lock' : 'fa-unlock'}"></i></td>
+							<td class="text-center"><i class="fa ${user.accountExpired ? 'fa-times' : 'fa-check'}"></i></td>
+						</tr>
+					</g:each>
 				</tbody>
 			</table>
-			<div class="pagination">
-				<g:paginate total="${userInstanceCount ?: 0}" />
-			</div>
 		</div>
+	</div>
+	<script>
+		$('#userTable').dataTable();
+	</script>
 	</body>
 </html>
