@@ -81,6 +81,8 @@
 				</fieldset>
 			</g:form>
 		</sec:ifAllGranted>
-
+		<script>
+			var isLive = "${eventInstance.isLive}";
+		</script>
 	</body>
 </html>
