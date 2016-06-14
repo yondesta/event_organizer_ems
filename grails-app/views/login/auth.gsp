@@ -44,6 +44,14 @@
                     <form method="post" id="reset-password-form" action="${createLink(controller: 'user', action: 'resetPassword')}" class="hidden">
                         <g:hiddenField id="reset-password-username" name="username" value=""/>
                     </form>
+                    <br>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <form action="${createLink(controller: 'registration', action: 'create')}" role="form">
+                                <button class="btn btn-default" type="submit">Sign Up</button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

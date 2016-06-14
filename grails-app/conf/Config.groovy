@@ -148,13 +148,9 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 	'/aboutus':					            ['permitAll'],
 	'/aboutus.gsp':				            ['permitAll'],
 	'/notification/**':			            ['isAuthenticated()'],
-	'/registration/**':			            ['ROLE_ADMIN', 'ROLE_FACILITATOR'],
-    '/registration/changePassword':		    ['permitAll'],
-    '/registration/changePassword.gsp':	    ['permitAll'],
-    '/registration/confirmRegistration':    ['permitAll'],
-    '/registration/updatePassword':         ['permitAll'],
+	'/registration/**':			            ['permitAll'],
     '/home':		        	            ['permitAll'],
     '/liveUpdate/**':		        	    ['ROLE_ADMIN', 'ROLE_FACILITATOR'],
-    '/liveUpdate/renderLiveUpdates':		    ['isAuthenticated()']
+    '/liveUpdate/renderLiveUpdates':		['isAuthenticated()']
 ]
 

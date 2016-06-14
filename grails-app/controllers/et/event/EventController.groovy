@@ -140,8 +140,8 @@ class EventController {
         def user = springSecurityService.getCurrentUser()
         if (!user) {
             // User sign up process is triggered
-            log.info "Unregistered user tried to join event ${eventInstance.title}"
-            redirect controller: 'registration', action: 'create', params: [eventInstanceId: eventInstance.id]
+            log.info "Unregistered user tried to join event"
+            redirect controller: 'login', action: 'auth'
             return
         }
         if (UserEvent.findByParticipant(user)?.event == eventInstance) {

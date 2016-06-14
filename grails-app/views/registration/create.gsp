@@ -22,7 +22,7 @@
         </g:eachError>
     </ul>
 </g:hasErrors>
-<form action="${createLink(action: 'save')}" role="form">
+<form action="${createLink(controller: 'registration', action: 'save')}" role="form">
     <g:render template="form"/>
     <fieldset class="buttons">
         <g:submitButton name="save" class="btn btn-default" value="Register"/>

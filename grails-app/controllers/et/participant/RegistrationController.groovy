@@ -12,12 +12,17 @@ class RegistrationController {
     def registrationService
 
     def create() {
-        [eventInstance: Event.load(params.eventInstanceId as long)]
+        def event
+        if (params.eventInstanceId)
+            event = Event.load(params.eventInstanceId as long)
+        [eventInstance: event]
     }
 
     @Transactional
     def save() {
-        def event = Event.get(params.eventId as long)
+        def event
+        if (params.eventId)
+            event = Event.get(params.eventId as long)
         def participant = new User(params.user)
         def password = registrationService.generatePassword()
         participant.password = password
@@ -28,12 +33,12 @@ class RegistrationController {
         ]
         if (!participant.validate()) {
             log.warn 'Error saving new participant'
-            render view: 'registerParticipant', model: model
+            render view: 'create', model: model
             return
         }
         participant.save(flush: true, failOnError: true)
         log.info "User ${participant.username} created."
-        event.save(flush: true, failOnError: true)
+//        event.save(flush: true, failOnError: true)
         participant.save(flush: true, failOnError: true)
         String token = registrationService.generateToken()
         new Registration(
@@ -89,7 +94,10 @@ class RegistrationController {
                 if (cmd.event)
                     UserEvent.create cmd.user, cmd.event, true
                 flash.message = "Welcome $cmd.user!"
-                redirect controller: 'user', action: 'home'
+                if (cmd.event)
+                    redirect controller: 'user', action: 'home'
+                else
+                    redirect controller: 'event', action: 'list'
                 return
             }
             log.warn "New passwords not matching!"
