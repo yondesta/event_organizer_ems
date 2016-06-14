@@ -1,10 +1,5 @@
-<br>
-<div class="row">
-    <div class="col-lg-12">
-        <div class="jumbotron text-center">
-            <h1><small id="time-to-live"></small></h1>
-        </div>
-    </div>
+<div class="jumbotron text-center">
+    <h1><small id="time-to-live"></small></h1>
 </div>
 <script>
     var refreshTimeToLive = function() {

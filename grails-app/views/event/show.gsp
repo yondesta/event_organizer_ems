@@ -34,12 +34,17 @@
 						<p>${eventInstance.description}</p>
 					</div>
 				</div>
-				%{--<g:if test="${eventInstance.isLive}">--}%
-					<g:render template="liveEventShow" model="[eventInstance: eventInstance]"/>
-				%{--</g:if>--}%
-				%{--<g:else>--}%
-					%{--<g:render template="countdown" model="[eventInstance: eventInstance]"/>--}%
-				%{--</g:else>--}%
+				<br>
+				<div class="row">
+					<div id="timeline" class="col-lg-12">
+						<g:if test="${eventInstance.isLive}">
+							<g:render template="liveEventShow" model="[eventInstance: eventInstance]"/>
+						</g:if>
+						%{--<g:else>--}%
+							%{--<g:render template="countdown" model="[eventInstance: eventInstance]"/>--}%
+						%{--</g:else>--}%
+					</div>
+				</div>
 			</div>
 			<div class="col-lg-4">
 				<div class="well">
@@ -76,5 +81,6 @@
 				</fieldset>
 			</g:form>
 		</sec:ifAllGranted>
+
 	</body>
 </html>
