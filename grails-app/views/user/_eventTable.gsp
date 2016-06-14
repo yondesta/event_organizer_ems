@@ -15,7 +15,7 @@
     <tbody>
             <g:each in="${userEvents}" var="event" status="idx">
                 <tr>
-                    <td>${event.title}</td>
+                    <td><a href="${createLink(controller: 'event', action: 'show', id: event.id)}">${event.title}</a></td>
                     <td class="text-center">
                         <ems:categoryButton eventId="${event.id}"/>
                     </td>

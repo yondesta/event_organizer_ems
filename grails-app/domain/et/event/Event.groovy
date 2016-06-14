@@ -19,6 +19,7 @@ class Event {
     BigDecimal registrationFee = 0
     boolean isOpen = true
     boolean isLive = false
+    boolean isExpired = false
 
     static hasMany = [notifications: Notification]
 
@@ -32,11 +33,16 @@ class Event {
         notifications nullable: true
     }
 
-    static transients = ['isLive']
+    static transients = ['isLive', 'isExpired']
 
     boolean getIsLive() {
         def now = new Date()
         now > startDate && now < endDate
+    }
+
+    boolean getIsExpired() {
+        def now = new Date()
+        now > endDate
     }
 
     def beforeValidate() {

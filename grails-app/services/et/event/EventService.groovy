@@ -1,29 +1,54 @@
 package et.event
 
-import et.participant.Role
 import et.participant.User
+import grails.plugin.springsecurity.SpringSecurityUtils
 import grails.transaction.Transactional
 
 @Transactional
 class EventService {
 
-    boolean isRegistrationOpen(User u, Event e) {
-        boolean isOpen
-        if (!u) {
-            isOpen = e.isOpen && new Date() < e.registrationDeadline && !isFull(e)
-        } else {
-            def userEvent = UserEvent.findByParticipantAndEvent(u, e)
-            isOpen = u && !userEvent && new Date() < e.registrationDeadline && !isFull(e)
-        }
-        isOpen
+    def springSecurityService
+
+    boolean isRegistrationOpen(Event e) {
+        e.isOpen &&
+                !UserEvent.findByParticipantAndEvent(springSecurityService.currentUser, e) &&
+                new Date() <= e.registrationDeadline &&
+                !isFull(e)
     }
 
     boolean isFull(Event e) {
         e.maxParticipants != 0 && e.maxParticipants == UserEvent.countByEvent(e)
     }
 
-    boolean isEventOwner(User u, Event e) {
-        u?.getAuthorities()?.contains(Role.findByAuthority("ROLE_EVENT_OWNER")) &&
-                e.owner == u
+    boolean isEventOwner(Event e) {
+        SpringSecurityUtils.ifAllGranted("ROLE_EVENT_OWNER") && e.owner == springSecurityService.currentUser
+    }
+
+    boolean canSendNotification(Event e) {
+        SpringSecurityUtils.ifAnyGranted('ROLE_ADMIN, ROLE_FACILITATOR') ||
+                (
+                        SpringSecurityUtils.ifAllGranted('ROLE_EVENT_OWNER') &&
+                        e.owner == springSecurityService.currentUser
+                )
+    }
+
+    boolean isVisible(Event e) {
+        !e.isExpired &&
+                (
+                        e.isOpen ||
+                                UserEvent.findByParticipantAndEvent(springSecurityService.currentUser, e) ||
+                                SpringSecurityUtils.ifAnyGranted('ROLE_ADMIN, ROLE_FACILITATOR')
+                )
+    }
+
+    boolean canAddLiveUpdates(Event e) {
+        e.isLive &&
+                (
+                        SpringSecurityUtils.ifAnyGranted('ROLE_ADMIN, ROLE_FACILITATOR') ||
+                                (
+                                        SpringSecurityUtils.ifAllGranted('ROLE_EVENT_OWNER') &&
+                                                springSecurityService.currentUser == e.owner
+                                )
+                )
     }
 }

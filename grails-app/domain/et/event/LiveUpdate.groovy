@@ -23,6 +23,6 @@ class LiveUpdate {
 
     String getElapsedTime() {
         TimeDuration elapsedTime = TimeCategory.minus(new Date(), dateCreated)
-        "${elapsedTime.getDays()}d ${elapsedTime.getHours()}h ${elapsedTime.getMinutes()}m"
+        "${elapsedTime.getHours()}h ${elapsedTime.getMinutes()}m ${elapsedTime.getSeconds()}s"
     }
 }

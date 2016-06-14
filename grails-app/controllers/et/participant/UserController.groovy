@@ -21,7 +21,7 @@ class UserController {
         if (SpringSecurityUtils.ifAnyGranted('ROLE_ADMIN, ROLE_FACILITATOR')) {
             userEvents = Event.findAllByEndDateGreaterThan(new Date(), [sort: 'startDate', order: 'asc'])
         } else if (SpringSecurityUtils.ifAllGranted('ROLE_EVENT_OWNER')) {
-            userEvents = Event.findAllByOwnerAndStartDateGreaterThan(userInstance, new Date())
+            userEvents = Event.findAllByOwnerAndEndDateGreaterThan(userInstance, new Date())
         } else if (SpringSecurityUtils.ifAllGranted('ROLE_USER')) {
             userEvents = Event.executeQuery(
                     """select e from UserEvent ue inner join ue.event e

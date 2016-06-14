@@ -35,14 +35,15 @@
 					</div>
 				</div>
 				<br>
+				<g:if test="${canAddLiveUpdates}">
+					<g:render template="/liveUpdate/addLiveUpdate" model="[eventInstance: eventInstance]"/>
+				</g:if>
+				<br>
 				<div class="row">
 					<div id="timeline" class="col-lg-12">
-						<g:if test="${eventInstance.isLive}">
-							<g:render template="liveEventShow" model="[eventInstance: eventInstance]"/>
+						<g:if test="${!eventInstance.isLive}">
+							<g:render template="countdown" model="[eventInstance: eventInstance]"/>
 						</g:if>
-						%{--<g:else>--}%
-							%{--<g:render template="countdown" model="[eventInstance: eventInstance]"/>--}%
-						%{--</g:else>--}%
 					</div>
 				</div>
 			</div>
@@ -65,7 +66,7 @@
 						<p>Phone: <strong>${eventInstance.phone}</strong></p>
 					</div>
 				</div>
-				<g:if test="${isEventOwner}">
+				<g:if test="${canSendNotification}">
 					<g:render template="sendNotification" model="[eventInstance: eventInstance]"/>
 				</g:if>
 			</div>
@@ -83,6 +84,26 @@
 		</sec:ifAllGranted>
 		<script>
 			var isLive = "${eventInstance.isLive}";
-		</script>
+			var getLiveUpdates = function() {
+				$.ajax({
+					url: "${createLink(controller: 'liveUpdate', action: 'renderLiveUpdates')}",
+					type: 'post',
+					dataType: 'html',
+					data: {
+						eventId: "${eventInstance.id}"
+					}
+				}).success(function(data) {
+					$('#timeline').html(data);
+				}).error(function() {
+					// Do nothing
+				})
+			}
+			if (isLive  === 'true') {
+				getLiveUpdates();
+				setInterval(function(){
+					getLiveUpdates();
+				}, 10000);
+			}
+	</script>
 	</body>
 </html>

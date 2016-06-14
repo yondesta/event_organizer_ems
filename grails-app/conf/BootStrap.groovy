@@ -113,11 +113,12 @@ class BootStrap {
 					category: categories[it % 5],
 					maxParticipants: venue.seatsNumber,
 					owner: eventOwners[it % 2],
-					startDate: new Date(2016 - 1900, eventStartMonth, eventStartDay),
-					endDate: new Date(2016 - 1900, eventStartMonth, eventStartDay + it % 3),
+					startDate: it == 1 ? new Date() : new Date(2016 - 1900, eventStartMonth, eventStartDay),
+					endDate: it == 1 ? new Date() + 1 : new Date(2016 - 1900, eventStartMonth, eventStartDay + it % 3),
 					venue: venue,
 					phone: '09123456',
-					email: "event$it@ems.et"
+					email: "event$it@ems.et",
+					isOpen: it % 2 != 0
 			)
 			(1..it % 4).each { idx ->
 				event.addToNotifications(new Notification(
@@ -126,7 +127,7 @@ class BootStrap {
 				))
 			}
 			event.save flush: true, failOnError: true
-			if (it % 20 == 0) {
+			if (it % 20 == 0 || it == 1) {
 				UserEvent.create guble, event, true
 			}
 			(0..rnd.nextInt(venue.seatsNumber)).each { idx ->

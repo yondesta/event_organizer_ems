@@ -21,7 +21,7 @@ class EventController {
         params.max = Math.min(max ?: 12, 100)
         params.sort = 'startDate'
         params.order = 'asc'
-        def events = Event.findAllByStartDateGreaterThan(new Date(), params)
+        def events = Event.findAllByEndDateGreaterThanAndIsOpen(new Date(), true, params)
         [events: events, eventInstanceCount: Event.count()]
     }
 
@@ -29,14 +29,25 @@ class EventController {
         params.max = Math.min(max ?: 12, 100)
         params.sort = 'startDate'
         params.order = 'asc'
-        def events = Event.findAllByStartDateGreaterThan(new Date(), params)
+        def events = Event.findAllByEndDateGreaterThan(new Date(), params)
         render view: 'index', model: [events: events, eventInstanceCount: Event.count()]
     }
 
     def show(Event eventInstance) {
-        boolean isRegistrationOpen = eventService.isRegistrationOpen(springSecurityService.currentUser, eventInstance)
-        boolean isEventOwner = eventService.isEventOwner(springSecurityService.currentUser, eventInstance)
-        [eventInstance: eventInstance, isRegistrationOpen: isRegistrationOpen, isEventOwner: isEventOwner]
+        if (!eventService.isVisible(eventInstance)) {
+            flash.message = "Event not found"
+            redirect uri: '/home'
+            return
+        }
+        boolean isRegistrationOpen = eventService.isRegistrationOpen(eventInstance)
+        boolean canSendNotification = eventService.canSendNotification(eventInstance)
+        boolean canAddLiveUpdates = eventService.canAddLiveUpdates(eventInstance)
+        [
+                eventInstance: eventInstance,
+                isRegistrationOpen: isRegistrationOpen,
+                canSendNotification: canSendNotification,
+                canAddLiveUpdates: canAddLiveUpdates
+        ]
     }
 
     def create() {
@@ -152,14 +163,5 @@ class EventController {
             outdata.time = """${elapsedTime.getDays()} d ${elapsedTime.getHours()} h ${elapsedTime.getMinutes()} m ${elapsedTime.getSeconds()} s"""
         }
         render outdata as JSON
-    }
-
-    def renderLiveUpdates() {
-        def updates
-        def event = Event.get(params.eventId as long)
-        if (event) {
-            updates = LiveUpdate.findAllByEvent(event, [sort: 'dateCreated', order: 'desc', limit: 50])
-        }
-        render template: 'liveEventShow', model: [events: events]
     }
 }
