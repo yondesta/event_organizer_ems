@@ -18,6 +18,7 @@ class Event {
     Date registrationDeadline
     BigDecimal registrationFee = 0
     boolean isOpen = true
+    boolean isLive = false
 
     static hasMany = [notifications: Notification]
 
@@ -29,6 +30,13 @@ class Event {
         maxParticipants min: 0
         registrationFee min: new BigDecimal(0)
         notifications nullable: true
+    }
+
+    static transients = ['isLive']
+
+    boolean getIsLive() {
+        def now = new Date()
+        now > startDate && now < endDate
     }
 
     def beforeValidate() {

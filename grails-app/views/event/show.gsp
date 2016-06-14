@@ -25,11 +25,21 @@
 			</div>
 		</g:if>
 		<div class="row">
-			<div class="col-lg-3">
-				<img src="${createLink(uri: '/images/')}${eventInstance.venue.picture}" width="100%"/>
-			</div>
-			<div class="col-lg-5">
-				<p>${eventInstance.description}</p>
+			<div class="col-lg-8">
+				<div class="row">
+					<div class="col-lg-5">
+						<img src="${createLink(uri: '/images/')}${eventInstance.venue.picture}" width="100%"/>
+					</div>
+					<div class="col-lg-7">
+						<p>${eventInstance.description}</p>
+					</div>
+				</div>
+				%{--<g:if test="${eventInstance.isLive}">--}%
+					<g:render template="liveEventShow" model="[eventInstance: eventInstance]"/>
+				%{--</g:if>--}%
+				%{--<g:else>--}%
+					%{--<g:render template="countdown" model="[eventInstance: eventInstance]"/>--}%
+				%{--</g:else>--}%
 			</div>
 			<div class="col-lg-4">
 				<div class="well">
@@ -50,32 +60,13 @@
 						<p>Phone: <strong>${eventInstance.phone}</strong></p>
 					</div>
 				</div>
+				<g:if test="${isEventOwner}">
+					<g:render template="sendNotification" model="[eventInstance: eventInstance]"/>
+				</g:if>
 			</div>
 		</div>
 		<div class="row">
-			<g:if test="${isEventOwner}">
-				<div class="col-lg-4">
-					<div class="panel panel-default">
-						<div class="panel-heading">
-							Send Notification
-						</div>
-						<form action="${createLink(controller: 'notification', action: 'sendNotification')}" role="form">
-							<div class="panel-body">
-								<div class="form-group">
-									<input class="form-control" placeholder="Title" name="title" type="text"/>
-								</div>
-								<div class="form-group">
-									<textarea class="form-control" placeholder="Message" name="message" cols="3"></textarea>
-								</div>
-								<g:hiddenField name="event.id" value="${eventInstance.id}"/>
-							</div>
-							<div class="panel-footer text-right">
-								<button type="submit" class="btn btn-primary">Send</button>
-							</div>
-						</form>
-					</div>
-				</div>
-			</g:if>
+
 		</div>
 		<sec:ifAllGranted roles="ROLE_EVENT_OWNER">
 			<g:form url="[resource:eventInstance, action:'delete']" method="DELETE">

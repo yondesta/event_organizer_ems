@@ -2,6 +2,9 @@ package et.event
 
 import et.participant.User
 import et.participant.UserRole
+import grails.converters.JSON
+import groovy.time.TimeCategory
+import groovy.time.TimeDuration
 
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
@@ -139,5 +142,24 @@ class EventController {
             flash.message = "You successfully registered to the event!"
         }
         redirect action: 'show', id: eventInstance.id
+    }
+
+    def getTimeToLive() {
+        def outdata = [time: '']
+        def event = Event.get(params.eventId as long)
+        if (event) {
+            TimeDuration elapsedTime = TimeCategory.minus(event.startDate, new Date())
+            outdata.time = """${elapsedTime.getDays()} d ${elapsedTime.getHours()} h ${elapsedTime.getMinutes()} m ${elapsedTime.getSeconds()} s"""
+        }
+        render outdata as JSON
+    }
+
+    def renderLiveUpdates() {
+        def updates
+        def event = Event.get(params.eventId as long)
+        if (event) {
+            updates = LiveUpdate.findAllByEvent(event, [sort: 'dateCreated', order: 'desc', limit: 50])
+        }
+        render template: 'liveEventShow', model: [events: events]
     }
 }

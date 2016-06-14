@@ -1,6 +1,7 @@
 /*
 *= require ems/bootstrap
 *= require ems/metisMenu
+*= require ems/timeline
 *= require ems/sb-admin-2
 *= require ems/font-awesome
 *= require datatables-integration/dataTables.bootstrap.css
